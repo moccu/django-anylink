@@ -1,0 +1,41 @@
+{% extends 'admin/change_form.html' %}
+
+
+{% block extrahead %}
+	{{ block.super }}
+	<script type="text/javascript">
+		(function($) {
+			$(document).ready(function() {
+				var extensions = {
+					{% for extension in link_extensions %}
+					'{{ extension.get_name }}': [
+						{% for field in extension.get_provided_fields %}
+							'{{ field }}'{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+					],
+					{% endfor %}
+				};
+
+				var update_visibility = function(link_type) {
+					$.each(extensions, function(extension, fields) {
+						$.each(fields, function(i, field) {
+							$('.field-' + field).hide();
+						});
+					});
+
+					if (link_type !== '') {
+						$.each(extensions[link_type], function(i, field) {
+							$('.field-' + field).show();
+						});
+					}
+				}
+
+				update_visibility($('#id_link_type').val());
+
+				$('#id_link_type').change(function() {
+					update_visibility($(this).val());
+				});
+			});
+		})(django.jQuery);
+	</script>
+{% endblock %}

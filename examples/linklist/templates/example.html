@@ -1,0 +1,25 @@
+{% load static %}
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+	</head>
+	<body>
+		{% for linklist in linklist_list %}
+			<h1>{{ linklist.description }}</h1>
+			<ul>
+				{% for obj in linklist.link_set.all %}
+					{% with obj.link as link %}
+					<li><a
+						href="{{link.get_absolute_url }}"
+						{% if link.title %}title="{{ link.title }}"{% endif %}
+						{% if link.target %}target="{{ link.target }}"{% endif %}
+						{% if link.css_class %}class="{{ link.css_class }}"{% endif %}
+					>{{ link.get_absolute_url }}</a></li>
+					</li>
+					{% endwith %}
+				{% endfor %}
+			</ul>
+		{% endfor %}
+	</body>
+</html>
