@@ -28,6 +28,18 @@ class TestAnyLinkMetaclass:
             class AnyLinkTest(AnyLink):
                 pass
 
+    def test_extension_registration_with_options(self, settings):
+        settings.ANYLINK_EXTENSIONS = (
+            ('anylink.extensions.ExternalLink', {'test': 'foo'}),
+        )
+
+        class AnyLinkTest(AnyLink):
+            pass
+
+        assert len(AnyLinkTest.extensions) == 1
+        assert AnyLinkTest.extensions['external_url'].kwargs == {'test': 'foo'}
+        assert hasattr(AnyLinkTest, 'get_link_type_display')
+
 
 class TestAnyLink:
     def test_clean_no_type_selected(self):
@@ -43,8 +55,19 @@ class TestAnyLink:
         clean_mock.assert_called_with(link)
 
     @mock.patch('anylink.extensions.ExternalLink.get_absolute_url')
+    def test_unicode_repr(self, get_absolute_url_mock):
+        get_absolute_url_mock.return_value = 'fakeurl'
+
+        link = AnyLink(link_type='external_url')
+        assert unicode(link) == get_absolute_url_mock.return_value
+
+    @mock.patch('anylink.extensions.ExternalLink.get_absolute_url')
     def test_get_absolute_url(self, get_absolute_url_mock):
         link = AnyLink(link_type='external_url')
 
         assert link.get_absolute_url() == get_absolute_url_mock.return_value
         get_absolute_url_mock.assert_called_with(link)
+
+    def test_get_rtelink_id(self):
+        link = AnyLink(link_type='external_url', pk=23)
+        assert link.get_rtelink_id() == '#AL23'
