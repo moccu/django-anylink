@@ -69,7 +69,6 @@ class AnyLink(models.Model):
         verbose_name_plural = _('Links')
 
     def __unicode__(self):
-        # return u'{0}: {1}'.format(self.get_link_type_display(), self.get_absolute_url())
         return self.get_absolute_url()
 
     def get_absolute_url(self):

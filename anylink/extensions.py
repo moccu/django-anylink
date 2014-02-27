@@ -48,7 +48,7 @@ class ExternalLink(BaseLink):
         )
 
     def get_absolute_url(self, link):
-        return link.external_url
+        return getattr(link, self.get_name()) or None
 
 
 class ModelLink(BaseLink):
