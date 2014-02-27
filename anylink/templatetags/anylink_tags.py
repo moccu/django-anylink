@@ -7,7 +7,7 @@ from ..models import AnyLink
 
 register = template.Library()
 
-RTELINK_RE = re.compile(r'<a.*href=["\']#AL(\d+)["\'][^>]*>')
+RTELINK_RE = re.compile(r'<a[^\>]href=["\']#AL(\d+)["\'][^\>]*>')
 
 
 def rtelink_sub_callback(match):
