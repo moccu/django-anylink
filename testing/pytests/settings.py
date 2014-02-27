@@ -19,3 +19,5 @@ INSTALLED_APPS = (
 ANYLINK_EXTENSIONS = (
     'anylink.extensions.ExternalLink',
 )
+
+STATIC_URL = '/static/'
