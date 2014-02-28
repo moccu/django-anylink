@@ -71,19 +71,14 @@ setup(
         'dev': dev_requires,
     },
     tests_require=test_requires,
+    install_requires=install_requires,
     cmdclass={'test': PyTest},
     packages=find_packages(exclude=[
         'testing',
         'testing.pytests',
         'examples',
     ]),
-    package_data={
-        'anylink': [
-            'static/anylink/*.js',
-            'static/tiny_mce/plugins/anylink/*/*',
-            'templates/admin/anylink/anylink/*'
-        ],
-    },
+    include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -93,6 +88,8 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: Implementation :: CPython',
         'Framework :: Django',
     ],
     zip_safe=False,
