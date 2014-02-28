@@ -3,6 +3,8 @@ django-anylink documentation
 
 Generic linking in Django. Includes support for RichText editors like TinyMCE.
 
+.. _overview:
+
 What is django-anylink
 ----------------------
 
