@@ -58,7 +58,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
         return (
             '_popup' in request.POST
             and 'ed' in request.GET
-            and EDITOR_ID_RE.match(request.GET['ed'])
+            and EDITOR_ID_RE.match(request.GET['ed']) is not None
         )
 
     def response_rtelink(self, request, obj):
