@@ -1,6 +1,40 @@
 import codecs
 import os
+import sys
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+
+
+test_requires = [
+    'py>=1.4.20',
+    'pyflakes>=0.7.3',
+    'pytest>=2.5.2',
+    'pytest-cache>=1.0',
+    'pytest-cov>=1.6',
+    'pytest-flakes==0.2',
+    'pytest-pep8==1.0.5',
+    'pytest-django==2.6',
+    'cov-core==1.7',
+    'coverage==3.7.1',
+    'mock==1.0.1',
+    'pep8==1.4.6',
+]
+
+
+install_requires = [
+    'Django>=1.5,<1.7',
+]
+
+
+dev_requires = [
+    'tox',
+]
+
+
+docs_requires = [
+    'sphinx',
+    'sphinx_rtd_theme'
+]
 
 
 def read(*parts):
@@ -9,14 +43,35 @@ def read(*parts):
         return fp.read()
 
 
+class PyTest(TestCommand):
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        # import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
+
+
 setup(
     name='django-anylink',
-    version='0.0.1',
+    version='0.1.0',
     description='Generic links for Django models.',
     long_description=read('README.rst') + read('CHANGES.rst'),
     author='Moccu GmbH & Co. KG',
     author_email='info@moccu.com',
     url='https://github.com/moccu/django-anylink/',
+    extras_require={
+        'docs': docs_requires,
+        'tests': test_requires,
+        'dev': dev_requires,
+    },
+    tests_require=test_requires,
+    cmdclass={'test': PyTest},
     packages=find_packages(exclude=[
         'testing',
         'testing.pytests',
@@ -36,6 +91,8 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Framework :: Django',
     ],
     zip_safe=False,

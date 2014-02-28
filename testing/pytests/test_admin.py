@@ -99,7 +99,6 @@ class TestAnyLinkAdmin:
             'opener.dismissAddAnotherPopup(window, "{0}", "http://test.de/");'
         ).format(AnyLink.objects.get().pk) in response.content
 
-
     def test_response_rtelink_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
         response = admin_client.post('/admin/anylink/anylink/{0}/?ed=ed1'.format(obj.pk), data={
