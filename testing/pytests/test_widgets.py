@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import pytest
 
 from django.forms.models import modelform_factory
@@ -43,7 +44,7 @@ class TestAnyLinkAddOrChangeWidget:
         )
 
     def test_form_media(self):
-        out = unicode(TestForm().media)
+        out = str(TestForm().media)
         assert out == (
             '<script type="text/javascript" src="/static/anylink/anylink-'
             'addorchangewidget.js"></script>'

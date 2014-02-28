@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django import forms
 from django.conf import settings
 from django.contrib import admin
@@ -47,7 +48,7 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
             params = self.url_parameters()
             if params:
                 url_params = '?' + '&amp;'.join(
-                    ['%s=%s' % (k, v) for k, v in params.items()])
+                    ['%s=%s' % (k, v) for k, v in list(params.items())])
             else:
                 url_params = ''
 

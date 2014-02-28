@@ -1,6 +1,7 @@
+from __future__ import unicode_literals
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class BaseLink(object):
@@ -80,4 +81,4 @@ class ModelLink(BaseLink):
 
     def get_absolute_url(self, link):
         obj = getattr(link, self.get_name())
-        return obj and unicode(obj.get_absolute_url()) or None
+        return obj and str(obj.get_absolute_url()) or None

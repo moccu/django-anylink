@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import mock
 import pytest
 
@@ -59,7 +60,7 @@ class TestAnyLink:
         get_absolute_url_mock.return_value = 'fakeurl'
 
         link = AnyLink(link_type='external_url')
-        assert unicode(link) == get_absolute_url_mock.return_value
+        assert str(link) == get_absolute_url_mock.return_value
 
     @mock.patch('anylink.extensions.ExternalLink.get_absolute_url')
     def test_get_absolute_url(self, get_absolute_url_mock):

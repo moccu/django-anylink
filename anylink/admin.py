@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import re
 
 from django.contrib import admin
@@ -11,13 +12,14 @@ EDITOR_ID_RE = re.compile('^[\w\-]+$')
 
 
 class AnyLinkAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'link_type', 'text')
+    # TODO: Add test for `get_absolute_url` for py3k
+    list_display = ('get_absolute_url', 'link_type', 'text')
     list_filter = ('link_type', 'target')
     search_fields = ('text', 'title')
 
     def __init__(self, *args, **kwargs):
         super(AnyLinkAdmin, self).__init__(*args, **kwargs)
-        for extension in self.model.extensions.values():
+        for extension in list(self.model.extensions.values()):
             extension.configure_modeladmin(self)
 
     def get_model_perms(self, request):
@@ -30,7 +32,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
 
     def render_change_form(self, request, context, *args, **kwargs):
         context.update({
-            'link_extensions': self.model.extensions.values()
+            'link_extensions': list(self.model.extensions.values())
         })
 
         return super(AnyLinkAdmin, self).render_change_form(
@@ -78,7 +80,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
         return SimpleTemplateResponse(
             'admin/anylink/anylink/addorchange_response.html', {
                 'link_id': obj.pk,
-                'link_name': escape(unicode(obj))
+                'link_name': escape(str(obj))
             })
 
 admin.site.register(AnyLink, AnyLinkAdmin)
