@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
+import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-from django.db.models.base import ModelBase
-from django.utils.functional import curry
+from django.db.models import signals
 from django.utils.module_loading import import_by_path
+from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
 from django.utils import six
 from django.utils.encoding import python_2_unicode_compatible
@@ -19,46 +20,60 @@ TARGET_CHOICES = (
 )
 
 
-class AnyLinkMetaclass(ModelBase):
-    def __new__(cls, name, bases, attrs):
-        new_class = super(AnyLinkMetaclass, cls).__new__(cls, name, bases, attrs)
+def do_anylink_extension_setup(sender, **kwargs):
+    extensions = {}
 
-        if not hasattr(new_class, '_meta'):
-            return new_class
+    setup_admin = kwargs.pop('setup_admin', True)
 
-        new_class.extensions = {}
-        new_class.extension_choices = []
-        for extension in getattr(settings, 'ANYLINK_EXTENSIONS', []):
-            extension_kwargs = {}
+    for extension in getattr(settings, 'ANYLINK_EXTENSIONS', []):
+        extension_kwargs = {}
 
-            if not isinstance(extension, six.text_type):
-                extension_kwargs = extension[1]
-                extension = extension[0]
+        if not isinstance(extension, six.text_type):
+            extension_kwargs = extension[1]
+            extension = extension[0]
 
-            extension = import_by_path(extension)(**extension_kwargs)
+        extension = import_by_path(extension)(**extension_kwargs)
 
-            extension_name = extension.get_name().lower()
+        extension_name = extension.get_name().lower()
 
-            if extension_name in new_class.extensions:
-                raise ImproperlyConfigured(
-                    'AnyLink extension named "{0}" already exists.'.format(
-                        extension_name))
+        if extension_name in extensions:
+            raise ImproperlyConfigured(
+                'AnyLink extension named "{0}" already exists.'.format(
+                    extension_name))
 
-            new_class.extensions[extension_name] = extension
-            new_class.extension_choices.append((extension_name, extension.get_verbose_name()))
-            extension.configure_model(new_class)
+        extensions[extension_name] = extension
+        extension.configure_model(sender)
 
-        link_type = new_class._meta.get_field('link_type')
-        link_type.choices.extend(new_class.extension_choices)
+    choices = [(name, verbose) for name, verbose in extensions.iteritems()]
 
-        # Manually add display function.
-        new_class.get_link_type_display = curry(new_class._get_FIELD_display, field=link_type)
+    sender.extensions = extensions
+    sender.extension_choices = choices
 
-        return new_class
+    link_type = sender._meta.get_field('link_type')
+    link_type.choices.extend(sender.extension_choices)
+
+    # Manually add display function.
+    sender.get_link_type_display = curry(sender._get_FIELD_display, field=link_type)
+
+    # Configure django modeladmin
+    has_admin = 'django.contrib.admin' in settings.INSTALLED_APPS
+
+    if has_admin:
+        for extension in list(sender.extensions.values()):
+            # TODO: Support non-default admin site configuration.
+            from django.contrib import admin
+
+            for sender, modeladmin in admin.site._registry.items():
+                extension.configure_modeladmin(modeladmin)
+
+
+# In Django 1.7 anylink extensions get initialized in anylink.apps
+if django.VERSION[:2] < (1, 7):
+    signals.class_prepared.connect(do_anylink_extension_setup)
 
 
 @python_2_unicode_compatible
-class AnyLink(six.with_metaclass(AnyLinkMetaclass, models.Model)):
+class AnyLink(models.Model):
     text = models.CharField(_('text'), max_length=150, blank=True)
     title = models.CharField(_('title'), max_length=150, blank=True)
     target = models.CharField(

@@ -4,7 +4,11 @@ import pytest
 
 from django.core.exceptions import ImproperlyConfigured
 
-from anylink.models import AnyLink
+from anylink.models import AnyLink, do_anylink_extension_setup
+
+
+class AnyLinkTest(AnyLink):
+    pass
 
 
 class TestAnyLinkMetaclass:
@@ -13,8 +17,7 @@ class TestAnyLinkMetaclass:
             'anylink.extensions.ExternalLink',
         )
 
-        class AnyLinkTest(AnyLink):
-            pass
+        do_anylink_extension_setup(AnyLinkTest)
 
         assert len(AnyLinkTest.extensions) == 1
         assert hasattr(AnyLinkTest, 'get_link_type_display')
@@ -26,16 +29,14 @@ class TestAnyLinkMetaclass:
         )
 
         with pytest.raises(ImproperlyConfigured):
-            class AnyLinkTest(AnyLink):
-                pass
+            do_anylink_extension_setup(AnyLinkTest)
 
     def test_extension_registration_with_options(self, settings):
         settings.ANYLINK_EXTENSIONS = (
             ('anylink.extensions.ExternalLink', {'test': 'foo'}),
         )
 
-        class AnyLinkTest(AnyLink):
-            pass
+        do_anylink_extension_setup(AnyLinkTest)
 
         assert len(AnyLinkTest.extensions) == 1
         assert AnyLinkTest.extensions['external_url'].kwargs == {'test': 'foo'}

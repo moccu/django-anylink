@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import re
 
+import django
 from django.contrib import admin
 from django.template.response import SimpleTemplateResponse
 from django.utils.html import escape
@@ -16,11 +17,6 @@ class AnyLinkAdmin(admin.ModelAdmin):
     list_display = ('get_absolute_url', 'link_type', 'text')
     list_filter = ('link_type', 'target')
     search_fields = ('text', 'title')
-
-    def __init__(self, *args, **kwargs):
-        super(AnyLinkAdmin, self).__init__(*args, **kwargs)
-        for extension in list(self.model.extensions.values()):
-            extension.configure_modeladmin(self)
 
     def get_model_perms(self, request):
         # Adding is disabled to hide the add buttons.

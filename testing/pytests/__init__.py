@@ -1,7 +1,11 @@
 from __future__ import unicode_literals
-from django.contrib import admin
+import django
 
 
-# We need to admin.autodiscover here because pytest won't load the urls file
-# and therefore won't register the apps.
-admin.autodiscover()
+if django.VERSION[:2] < (1, 7):
+    from django.contrib import admin
+    # We need to admin.autodiscover here because pytest won't load the urls file
+    # and therefore won't register the apps.
+    admin.autodiscover()
+else:
+    django.setup()

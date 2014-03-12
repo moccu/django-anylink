@@ -63,7 +63,7 @@ class TestModelLink:
         self.model_mock._meta.verbose_name = 'Mock Model'
         self.model_mock.return_value.get_absolute_url = lambda: 'mock-url'
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     def test_init_error(self, get_model_mock):
         delattr(self.model_mock, 'get_absolute_url')
         get_model_mock.return_value = self.model_mock
@@ -77,7 +77,7 @@ class TestModelLink:
         assert get_model_mock.call_count == 1
         assert get_model_mock.call_args[0] == ('mock', 'Model')
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     def test_init_success(self, get_model_mock):
         get_model_mock.return_value = self.model_mock
 
@@ -85,7 +85,7 @@ class TestModelLink:
 
         assert link.model == self.model_mock
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     def test_name(self, get_model_mock):
         get_model_mock.return_value = self.model_mock
 
@@ -95,7 +95,7 @@ class TestModelLink:
         link.kwargs['name'] = 'asdmodel'
         assert link.get_name() == 'asdmodel'
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     def test_verbose_name(self, get_model_mock):
         get_model_mock.return_value = self.model_mock
 
@@ -105,7 +105,7 @@ class TestModelLink:
         link.kwargs['verbose_name'] = 'asd Model'
         assert link.get_verbose_name() == 'asd Model'
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     @mock.patch('anylink.extensions.models.ForeignKey')
     def test_configure_model(self, foreignkey_mock, get_model_mock):
         get_model_mock.return_value = self.model_mock
@@ -115,7 +115,7 @@ class TestModelLink:
 
         assert link_mock.add_to_class.call_count == 1
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     def test_configure_modeladmin(self, get_model_mock):
         get_model_mock.return_value = self.model_mock
 
@@ -129,7 +129,7 @@ class TestModelLink:
         ModelLink(model='mock.Model').configure_modeladmin(link_admin_mock)
         assert link_admin_mock.raw_id_fields == ['field1', 'field2', 'mockmodel']
 
-    @mock.patch('anylink.extensions.models.get_model')
+    @mock.patch('anylink.extensions.get_model')
     def test_get_absolute_url(self, get_model_mock):
         get_model_mock.return_value = self.model_mock
 

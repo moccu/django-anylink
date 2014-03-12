@@ -23,7 +23,7 @@ test_requires = [
 
 
 install_requires = [
-    'Django>=1.5,<1.7',
+    'Django>=1.4',
 ]
 
 
@@ -48,7 +48,7 @@ class PyTest(TestCommand):
 
     def finalize_options(self):
         TestCommand.finalize_options(self)
-        self.test_args = []
+        self.test_args = ['-vv']
         self.test_suite = True
 
     def run_tests(self):
@@ -90,6 +90,9 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Programming Language :: Python :: Implementation :: CPython',
         'Framework :: Django',

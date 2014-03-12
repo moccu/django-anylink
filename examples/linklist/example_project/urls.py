@@ -4,7 +4,10 @@ from django.contrib import admin
 
 from .views import LinklistView
 
-admin.autodiscover()
+import django
+
+if django.VERSION[:2] < (1.7):
+    admin.autodiscover()
 
 
 urlpatterns = patterns(

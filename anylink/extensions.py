@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
+import django
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from .compat import get_model
 
 
 class BaseLink(object):
@@ -17,8 +20,10 @@ class BaseLink(object):
             'name', self.name or self.__class__.__name__.lower())
 
     def get_verbose_name(self):
-        return self.kwargs.get(
-            'verbose_name', self.verbose_name or self.__class__.__name__)
+        retval = self.kwargs.get('verbose_name', None)
+        if retval is None and self.verbose_name is not None:
+            retval = self.verbose_name
+        return self.__class__.__name__
 
     def configure_model(self, model):
         pass
@@ -59,7 +64,7 @@ class ModelLink(BaseLink):
         if 'model' not in self.kwargs:
             raise ImproperlyConfigured('Please provide a model path')
 
-        self.model = models.get_model(*self.kwargs['model'].split('.'))
+        self.model = get_model(*self.kwargs['model'].split('.', 1))
 
         if not hasattr(self.model, 'get_absolute_url'):
             raise ImproperlyConfigured(
