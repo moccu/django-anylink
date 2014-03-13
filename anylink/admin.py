@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import re
 
-import django
 from django.contrib import admin
 from django.template.response import SimpleTemplateResponse
 from django.utils.html import escape

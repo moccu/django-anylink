@@ -11,12 +11,13 @@ from testing.testproject.models import TestModel
 
 TestForm = modelform_factory(TestModel, exclude=[])
 
-requires_django17 = pytest.mark.skipif(django.VERSION[:2] < (1, 7),
+requires_django17 = pytest.mark.skipif(
+    django.VERSION[:2] < (1, 7),
     reason='Django 1.7 changed form rendering behavior')
 
-skip_django17 = pytest.mark.skipif(django.VERSION[:2] >= (1, 7),
+skip_django17 = pytest.mark.skipif(
+    django.VERSION[:2] >= (1, 7),
     reason='Django 1.7 changed form rendering behavior')
-
 
 
 @pytest.mark.django_db

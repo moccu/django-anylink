@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import six
 from django.utils.encoding import python_2_unicode_compatible
 
+from . import compat
 
 SELF, BLANK, PARENT, TOP = ('_self', '_blank', '_parent', '_top')
 TARGET_CHOICES = (
@@ -21,9 +22,12 @@ TARGET_CHOICES = (
 
 
 def do_anylink_extension_setup(sender, **kwargs):
-    extensions = {}
+    if sender is not AnyLink and not issubclass(sender, AnyLink):
+        return
 
-    setup_admin = kwargs.pop('setup_admin', True)
+    from .admin import admin as anylink_admin
+
+    extensions = {}
 
     for extension in getattr(settings, 'ANYLINK_EXTENSIONS', []):
         extension_kwargs = {}
@@ -56,14 +60,13 @@ def do_anylink_extension_setup(sender, **kwargs):
     sender.get_link_type_display = curry(sender._get_FIELD_display, field=link_type)
 
     # Configure django modeladmin
-    has_admin = 'django.contrib.admin' in settings.INSTALLED_APPS
+    has_admin = compat.is_installed('django.contrib.admin')
 
     if has_admin:
         for extension in list(sender.extensions.values()):
-            # TODO: Support non-default admin site configuration.
-            from django.contrib import admin
 
-            for sender, modeladmin in admin.site._registry.items():
+            modeladmin = anylink_admin.site._registry.get(sender, None)
+            if modeladmin:
                 extension.configure_modeladmin(modeladmin)
 
 
