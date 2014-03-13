@@ -7,6 +7,7 @@ from anylink.templatetags.anylink_tags import insert_anylinks
 
 @pytest.mark.django_db
 class TestInsertAnyLinks:
+
     def setup(self):
         self.link1 = AnyLink.objects.create(
             pk=1, link_type='external_url', external_url='/link1/',

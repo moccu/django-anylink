@@ -22,10 +22,8 @@ TARGET_CHOICES = (
 
 
 def do_anylink_extension_setup(sender, **kwargs):
-    if sender is not AnyLink and not issubclass(sender, AnyLink):
+    if not getattr(sender, '_do_anylink_setup', False):
         return
-
-    from .admin import admin as anylink_admin
 
     extensions = {}
 
@@ -61,6 +59,7 @@ def do_anylink_extension_setup(sender, **kwargs):
 
     # Configure django modeladmin
     has_admin = compat.is_installed('django.contrib.admin')
+    anylink_admin = compat.get_app_module('django.contrib.admin')
 
     if has_admin:
         for extension in list(sender.extensions.values()):
@@ -86,6 +85,11 @@ class AnyLink(models.Model):
 
     link_type = models.CharField(
         _('type'), max_length=100, choices=[])
+
+    # Little hack to avoid other models being setup in
+    # `do_anylink_extension_setup` but still support subclasses
+    # and the wrong point-in-time in Django 1.6 raising `class_prepared`
+    _do_anylink_setup = True
 
     class Meta:
         verbose_name = _('Link')
