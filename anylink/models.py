@@ -44,7 +44,7 @@ def do_anylink_extension_setup(sender, **kwargs):
         extensions[extension_name] = extension
         extension.configure_model(sender)
 
-    choices = [(name, verbose) for name, verbose in extensions.iteritems()]
+    choices = [(name, verbose) for name, verbose in extensions.items()]
 
     sender.extensions = extensions
     sender.extension_choices = choices
