@@ -12,7 +12,7 @@ from anylink.models import AnyLink
 from testing.testproject.models import TestModel
 
 
-TestForm = modelform_factory(TestModel)
+TestForm = modelform_factory(TestModel, exclude=[])
 
 
 @pytest.mark.django_db
