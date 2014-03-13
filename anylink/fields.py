@@ -12,13 +12,15 @@ class AnyLinkAddOrChangeField(forms.ModelChoiceField):
 
 
 class AnyLinkField(models.ForeignKey):
-    def __init__(self, verbose_name='Link', to='anylink.AnyLink', **kwargs):
-        super(AnyLinkField, self).__init__(to, verbose_name=verbose_name, **kwargs)
+    def __init__(self, to='anylink.AnyLink', **kwargs):
+        kwargs['verbose_name'] = kwargs.pop('verbose_name', 'Link')
+        super(AnyLinkField, self).__init__(to, **kwargs)
 
     def formfield(self, **kwargs):
         defaults = {
             'form_class': AnyLinkAddOrChangeField,
             'rel': self.rel,
+            'to_field_name': self.rel.field_name,
         }
         defaults.update(kwargs)
         return super(AnyLinkField, self).formfield(**defaults)
