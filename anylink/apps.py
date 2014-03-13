@@ -3,10 +3,10 @@ from django.apps import AppConfig
 from django.utils.translation import ugettext_lazy as _
 
 
-class AnylinkConfig(AppConfig):
+class AnyLinkConfig(AppConfig):
 
     name = 'anylink'
-    verbose_name = _("Anylink")
+    verbose_name = _("AnyLink")
 
     def ready(self):
         from anylink.models import do_anylink_extension_setup

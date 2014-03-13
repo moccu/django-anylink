@@ -27,7 +27,7 @@ INSTALLED_APPS = (
 
 
 if not django.VERSION[:2] < (1, 7):
-    INSTALLED_APPS += ('anylink.apps.AnylinkConfig',)
+    INSTALLED_APPS += ('anylink.apps.AnyLinkConfig',)
 else:
     INSTALLED_APPS += ('anylink',)
 
