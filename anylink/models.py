@@ -3,7 +3,7 @@ import django
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-from django.db.models import signals
+from django.db.models.base import ModelBase
 from django.utils.module_loading import import_by_path
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
@@ -21,10 +21,7 @@ TARGET_CHOICES = (
 )
 
 
-def do_anylink_extension_setup(sender, **kwargs):
-    if not getattr(sender, '_do_anylink_setup', False):
-        return
-
+def do_anylink_extension_setup(cls, **kwargs):
     extensions = {}
 
     for extension in getattr(settings, 'ANYLINK_EXTENSIONS', []):
@@ -44,38 +41,58 @@ def do_anylink_extension_setup(sender, **kwargs):
                     extension_name))
 
         extensions[extension_name] = extension
-        extension.configure_model(sender)
+        extension.configure_model(cls)
 
     choices = [(name, verbose) for name, verbose in extensions.items()]
 
-    sender.extensions = extensions
-    sender.extension_choices = choices
+    cls.extensions = extensions
+    cls.extension_choices = choices
 
-    link_type = sender._meta.get_field('link_type')
-    link_type.choices.extend(sender.extension_choices)
+    link_type = cls._meta.get_field('link_type')
+    link_type.choices.extend(cls.extension_choices)
 
     # Manually add display function.
-    sender.get_link_type_display = curry(sender._get_FIELD_display, field=link_type)
+    cls.get_link_type_display = curry(cls._get_FIELD_display, field=link_type)
 
     # Configure django modeladmin
     has_admin = compat.is_installed('django.contrib.admin')
     anylink_admin = compat.get_app_module('django.contrib.admin')
 
     if has_admin:
-        for extension in list(sender.extensions.values()):
+        for extension in list(cls.extensions.values()):
 
-            modeladmin = anylink_admin.site._registry.get(sender, None)
+            modeladmin = anylink_admin.site._registry.get(cls, None)
             if modeladmin:
                 extension.configure_modeladmin(modeladmin)
 
 
-# In Django 1.7 anylink extensions get initialized in anylink.apps
-if django.VERSION[:2] < (1, 7):
-    signals.class_prepared.connect(do_anylink_extension_setup)
+class AnyLinkModelBase(ModelBase):
+    """
+    Metaclass for all models.
+    """
+    def __new__(cls, name, bases, attrs):
+        new_class = ModelBase.__new__(cls, name, bases, attrs)
+
+        # six.with_metaclass() inserts an extra class called 'NewBase' in the
+        # inheritance tree: Model -> NewBase -> object. But the initialization
+        # should be executed only once for a given model class.
+
+        # attrs will never be empty for classes declared in the standard way
+        # (ie. with the `class` keyword). This is quite robust.
+        if name == 'NewBase' and attrs == {}:
+            return new_class
+
+        # We do not need to initialize here for Django 1.7 (anylink.apps does
+        # this instead).
+        if django.VERSION[:2] >= (1, 7):
+            return new_class
+
+        do_anylink_extension_setup(new_class)
+        return new_class
 
 
 @python_2_unicode_compatible
-class AnyLink(models.Model):
+class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
     text = models.CharField(_('text'), max_length=150, blank=True)
     title = models.CharField(_('title'), max_length=150, blank=True)
     target = models.CharField(
