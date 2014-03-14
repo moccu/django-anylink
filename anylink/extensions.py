@@ -2,10 +2,12 @@ from __future__ import unicode_literals
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from .compat import get_model
 
 
+@python_2_unicode_compatible
 class BaseLink(object):
     name = None
     verbose_name = None
@@ -23,6 +25,9 @@ class BaseLink(object):
         if retval is None and self.verbose_name is not None:
             retval = self.verbose_name
         return self.__class__.__name__
+
+    def __str__(self):
+        return self.get_verbose_name()
 
     def configure_model(self, model):
         pass
