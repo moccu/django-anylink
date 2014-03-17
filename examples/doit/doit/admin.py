@@ -1,4 +1,3 @@
-from django import forms
 from django.db import models
 from django.contrib import admin
 from .models import Note, Item, Task
@@ -9,6 +8,7 @@ from tinymce.widgets import TinyMCE
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     model = Item
+
 
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):

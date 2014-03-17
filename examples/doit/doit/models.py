@@ -1,8 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from anylink.fields import AnyLinkField
-
 
 class Note(models.Model):
     subject = models.CharField(max_length=254)
