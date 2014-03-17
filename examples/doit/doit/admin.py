@@ -15,16 +15,15 @@ class ItemAdmin(admin.ModelAdmin):
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
 
-    list_display = ('description', 'due_to', 'priority')
+    list_display = ('colorized_priority', 'description', 'due_to')
 
-    def priority(self, obj):
+    def colorized_priority(self, obj):
         color_mapping = {
             1: 'green',
             2: 'orange',
             3: 'red'
         }
-        return '<div style="width: 100%%; height:100%%; background-color:{color};">{priority}</div>'.format(
+        return '<div style="width: 20px; height:100%%; background-color:{color};">&nbsp;</div>'.format(
             color=color_mapping[obj.priority],
-            priority=obj.priority
         )
-    priority.allow_tags = True
+    colorized_priority.allow_tags = True
