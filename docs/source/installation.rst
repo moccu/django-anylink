@@ -37,3 +37,22 @@ packages directory, add the following (or something similar) to your settings.
 
 Details on how to use `django-anylink` in your Django application can be found
 in the :ref:`configuration` section.
+
+
+TinyMCE Integration
+===================
+
+``django-anylink`` comes with a TinyMCE plugin already integrated. To use it
+you only have to install ``django-tinymce`` according to it's documentation
+and enable the anylink plugin.
+
+.. code-block::
+
+    TINYMCE_DEFAULT_CONFIG = {
+        'theme': 'advanced',
+        'plugins': 'anylink',
+        'theme_advanced_buttons1': (
+            'anylink',
+        ),
+        'anylink_url': '/anylink/anylink/',
+    }
