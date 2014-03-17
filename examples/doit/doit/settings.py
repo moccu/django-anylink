@@ -37,8 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'doit.notes',
-    'doit.tasks',
+    'doit',
 )
 
 MIDDLEWARE_CLASSES = (
