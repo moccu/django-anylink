@@ -27,7 +27,7 @@ def do_anylink_extension_setup(cls, **kwargs):
     for extension in getattr(settings, 'ANYLINK_EXTENSIONS', []):
         extension_kwargs = {}
 
-        if not isinstance(extension, six.text_type):
+        if not isinstance(extension, six.string_types):
             extension_kwargs = extension[1]
             extension = extension[0]
 
