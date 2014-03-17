@@ -3,4 +3,5 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'', include(admin.site.urls)),
+    url(r'^tinymce/', include('tinymce.urls')),
 )

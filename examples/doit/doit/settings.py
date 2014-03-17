@@ -37,6 +37,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'anylink',
+
+    'tinymce',
+
     'doit',
 )
 
@@ -81,4 +85,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'doit', 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'doit', 'media')
+
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    'relative_urls': False,
+    'document_base_url': '/',
+    'theme': 'advanced',
+    'height': 500,
+    'plugins': 'paste,anylink',
+    'theme_advanced_buttons1': (
+        'anylink',
+    ),
+    'anylink_url': '/anylink/anylink/',
+}
+
+
+ANYLINK_EXTENSIONS = (
+    'anylink.extensions.ExternalLink',
+    ('anylink.extensions.ModelLink', {'model': 'doit.Item'}),
+)
