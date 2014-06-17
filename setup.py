@@ -76,6 +76,7 @@ setup(
     packages=find_packages(exclude=[
         'testing',
         'testing.pytests',
+        'testing.testproject',
         'examples',
     ]),
     include_package_data=True,
