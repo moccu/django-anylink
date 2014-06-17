@@ -1,7 +1,7 @@
 include README.rst
 include CHANGES.rst
 include LICENSE
-include *.py
+include anylink *.py
 include tox.ini
 include pytest.ini
 include setup.cfg
@@ -13,5 +13,6 @@ recursive-include anylink/templates/admin/anylink/anylink *.html
 
 recursive-exclude * *.pyc
 recursive-exclude * *.pyo
+
 
 prune docs/_build
