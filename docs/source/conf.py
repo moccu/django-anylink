@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import os
+
 extensions = []
 
 templates_path = ['_templates']
