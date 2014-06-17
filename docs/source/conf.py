@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-import sphinx_rtd_theme
 
 extensions = []
 
