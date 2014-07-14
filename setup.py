@@ -61,7 +61,7 @@ setup(
     name='django-anylink',
     version='0.1.0',
     description='Generic links for Django models.',
-    long_description=read('README.rst') + read('CHANGES.rst'),
+    long_description=read('README.rst') + '\n\n' + read('CHANGES.rst'),
     author='Moccu GmbH & Co. KG',
     author_email='info@moccu.com',
     url='https://github.com/moccu/django-anylink/',
