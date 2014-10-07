@@ -18,7 +18,6 @@ TestForm = modelform_factory(TestModel, exclude=[])
 
 
 class MyCustomAnyLinkForm(ModelForm):
-    some_weird_attr = True
 
     class Meta:
         model = AnyLink
@@ -36,7 +35,7 @@ class TestAnyLinkAdmin:
         assert issubclass(self.modeladmin.get_form(req), ModelForm)
 
         settings.ANYLINK_ADMIN_FORM = 'testing.pytests.test_admin.MyCustomAnyLinkForm'
-        assert self.modeladmin.get_form(req).some_weird_attr
+        assert issubclass(self.modeladmin.get_form(req), MyCustomAnyLinkForm)
 
     def test_model_perms(self, rf):
         request = rf.get('/')
