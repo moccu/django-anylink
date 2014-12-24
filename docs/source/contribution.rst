@@ -9,7 +9,7 @@ Django Code
 To install all requirements for development and testing, you can use the provided
 requirements file.
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ pip install -r resources/requirements-develop.txt
 
@@ -22,13 +22,13 @@ on every run.
 
 This is how you execute the tests and checks from the repository root directory.
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ py.test
 
 If you want to generate a coverage report, you can use the following command.
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ py.test --cov=omnibus --cov-report=html .
 
@@ -41,7 +41,7 @@ in the ``docs/source`` folder.
 To update/generate the html output of the documentation, use the following
 command inside the ``docs`` folder.
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ make html
 

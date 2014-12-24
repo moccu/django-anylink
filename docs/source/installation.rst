@@ -46,7 +46,7 @@ TinyMCE Integration
 you only have to install ``django-tinymce`` according to it's documentation
 and enable the anylink plugin.
 
-.. code-block::
+.. code-block:: python
 
     TINYMCE_DEFAULT_CONFIG = {
         'theme': 'advanced',

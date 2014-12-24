@@ -3,7 +3,9 @@ import mock
 import pytest
 
 from django.contrib import admin
-from django.forms.models import modelform_factory
+from django.contrib.auth.models import User
+from django.test.client import RequestFactory
+from django.forms.models import ModelForm, modelform_factory
 from django.utils.encoding import force_text
 
 from anylink.admin import AnyLinkAdmin
@@ -15,10 +17,25 @@ from testing.testproject.models import TestModel
 TestForm = modelform_factory(TestModel, exclude=[])
 
 
+class MyCustomAnyLinkForm(ModelForm):
+
+    class Meta:
+        model = AnyLink
+        exclude = ()
+
+
 @pytest.mark.django_db
 class TestAnyLinkAdmin:
     def setup(self):
         self.modeladmin = AnyLinkAdmin(AnyLink, admin.site)
+
+    def test_form_can_be_customized(self, settings, admin_client):
+        req = RequestFactory().get('/')
+        req.user = User.objects.get(pk=admin_client.session['_auth_user_id'])
+        assert issubclass(self.modeladmin.get_form(req), ModelForm)
+
+        settings.ANYLINK_ADMIN_FORM = 'testing.pytests.test_admin.MyCustomAnyLinkForm'
+        assert issubclass(self.modeladmin.get_form(req), MyCustomAnyLinkForm)
 
     def test_model_perms(self, rf):
         request = rf.get('/')

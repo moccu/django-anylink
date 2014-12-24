@@ -8,7 +8,7 @@ from django.utils.module_loading import import_by_path
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
 from django.utils import six
-from django.utils.encoding import python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible, force_text
 
 from . import compat
 
@@ -103,17 +103,12 @@ class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
     link_type = models.CharField(
         _('type'), max_length=100, choices=[])
 
-    # Little hack to avoid other models being setup in
-    # `do_anylink_extension_setup` but still support subclasses
-    # and the wrong point-in-time in Django 1.6 raising `class_prepared`
-    _do_anylink_setup = True
-
     class Meta:
         verbose_name = _('Link')
         verbose_name_plural = _('Links')
 
     def __str__(self):
-        return self.get_absolute_url()
+        return force_text(self.get_absolute_url())
 
     def get_absolute_url(self):
         return self.extensions[self.link_type].get_absolute_url(self)

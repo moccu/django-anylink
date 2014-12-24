@@ -25,6 +25,14 @@ INSTALLED_APPS = (
     'testing.testproject'
 )
 
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
 
 if not django.VERSION[:2] < (1, 7):
     INSTALLED_APPS += ('anylink.apps.AnyLinkConfig',)
