@@ -7,7 +7,7 @@ Generic linking for Django
     :alt: Latest PyPI version
 
 .. image:: https://travis-ci.org/moccu/django-anylink.png
-   :target: https://travis-ci.org/EnTeQuAk/django-anylink
+   :target: https://travis-ci.org/moccu/django-anylink
    :alt: Latest Travis CI build status
 
 `django-anylink` is a generic linking module for Django. Using this module, you
