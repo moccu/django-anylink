@@ -24,7 +24,7 @@ class BaseLink(object):
         retval = self.kwargs.get('verbose_name', None)
         if retval is None and self.verbose_name is not None:
             retval = self.verbose_name
-        return self.__class__.__name__
+        return retval or self.__class__.__name__
 
     def __str__(self):
         return self.get_verbose_name()
