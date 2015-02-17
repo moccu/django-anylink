@@ -24,6 +24,10 @@ DELETE_IMG = (
 class AnyLinkAddOrChangeWidget(forms.TextInput):
     input_type = 'hidden'
 
+    # We need to pretend that our widget is a non-hidden input to ensure Django
+    # doesn't remove the form-row.
+    is_hidden = False
+
     class Media:
         js = ('anylink/anylink-addorchangewidget.js',)
 
