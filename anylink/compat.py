@@ -37,6 +37,7 @@ def get_all_related_objects(cls):
             if f.one_to_many and f.auto_created
         ]
 
+
 def add_error(form, field, msg, cleaned_data):
     if django.VERSION[:2] <= (1, 6):
         form._errors[field] = form.error_class([msg])

@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from .compat import get_all_related_objects, add_error
@@ -20,7 +21,7 @@ class AnyLinkAdminForm(forms.ModelForm):
             if settings.ANYLINK_REUSABLE:
                 objects = self.in_use(self.instance)
                 if len(objects) > 1 and not data.get('confirmation'):
-                    objects_used = u', '.join([unicode(obj) for obj in objects])
+                    objects_used = u', '.join([force_text(obj) for obj in objects])
                     msg = _(u'The following objects are using this link already: {0}'.format(
                         objects_used))
                     self.fields['confirmation'].widget = forms.CheckboxInput()
