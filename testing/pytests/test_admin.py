@@ -2,16 +2,16 @@ from __future__ import unicode_literals
 import mock
 import pytest
 
+from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
-from django.test.client import RequestFactory
 from django.forms.models import ModelForm, modelform_factory
 from django.utils.encoding import force_text
 
 from anylink.admin import AnyLinkAdmin
 from anylink.models import AnyLink
 
-from testing.testproject.models import TestModel
+from testing.testproject.models import TestModel, AnotherTestModel
 
 
 TestForm = modelform_factory(TestModel, exclude=[])
@@ -29,8 +29,8 @@ class TestAnyLinkAdmin:
     def setup(self):
         self.modeladmin = AnyLinkAdmin(AnyLink, admin.site)
 
-    def test_form_can_be_customized(self, settings, admin_client):
-        req = RequestFactory().get('/')
+    def test_form_can_be_customized(self, rf, settings, admin_client):
+        req = rf.get('/')
         req.user = User.objects.get(pk=admin_client.session['_auth_user_id'])
         assert issubclass(self.modeladmin.get_form(req), ModelForm)
 
@@ -163,5 +163,36 @@ class TestAnyLinkAdmin:
         response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
 
         assert response.status_code == 200
-        assert len(response.context_data['link_extensions']) == len(
-            settings.ANYLINK_EXTENSIONS)
+        field = response.context['adminform'].form.fields['confirmation']
+        assert not field.required
+        assert isinstance(field.widget, forms.HiddenInput)
+        assert len(response.context_data['link_extensions']) == len(settings.ANYLINK_EXTENSIONS)
+
+    def test_change_view_anylink_used_multiple(self, admin_client, settings):
+        link1 = AnyLink.objects.create(link_type='external_url', external_url='http://foo1')
+        link2 = AnyLink.objects.create(link_type='external_url', external_url='http://foo2')
+
+        obj1 = TestModel.objects.create(link=link1)
+        obj2 = TestModel.objects.create(link=link1)
+        obj3 = TestModel.objects.create(link=link2)
+        obj4 = AnotherTestModel.objects.create(link=link1)
+
+        data = {
+            '_popup': '1',
+            'link_type': 'external_url',
+            'target': '_self',
+            'external_url': 'http://test.de'
+        }
+        response = admin_client.post('/admin/anylink/anylink/{0}/'.format(link1.pk), data=data)
+
+        assert response.status_code == 200
+        form = response.context['adminform'].form
+        assert not form.is_valid()
+        field = form.fields['confirmation']
+        assert field.required
+        assert isinstance(field.widget, forms.CheckboxInput)
+        assert 'confirmation' in form.errors
+        assert str(obj1) in form.errors['__all__'][0]
+        assert str(obj2) in form.errors['__all__'][0]
+        assert str(obj3) not in form.errors['__all__'][0]
+        assert str(obj4) in form.errors['__all__'][0]

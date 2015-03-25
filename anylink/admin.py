@@ -8,6 +8,7 @@ from django.template.response import SimpleTemplateResponse
 from django.utils.html import escape
 from django.utils import importlib
 
+from .forms import AnyLinkAdminForm
 from .models import AnyLink
 
 
@@ -19,6 +20,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
     list_display = ('get_absolute_url', 'link_type', 'text')
     list_filter = ('link_type', 'target')
     search_fields = ('text', 'title')
+    form = AnyLinkAdminForm
 
     def __init__(self, *args, **kwargs):
         super(AnyLinkAdmin, self).__init__(*args, **kwargs)

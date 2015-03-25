@@ -26,3 +26,20 @@ def get_app_module(module_name):
         return apps.get_app_config(module_name.split('.')[-1]).module
     from django.utils.importlib import import_module
     return import_module(module_name)
+
+
+def get_all_related_objects(cls):
+    if django.VERSION[:2] <= (1, 7):
+        return cls._meta.get_all_related_objects()
+    else:
+        return [
+            f for f in cls._meta.get_fields()
+            if f.one_to_many and f.auto_created
+        ]
+
+def add_error(form, field, msg, cleaned_data):
+    if django.VERSION[:2] <= (1, 6):
+        form._errors[field] = form.error_class([msg])
+        del cleaned_data[field]
+    else:
+        form.add_error(field, msg)

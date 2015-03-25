@@ -6,12 +6,13 @@ If you like to contribute to this project please read the following guides.
 Django Code
 -----------
 
-To install all requirements for development and testing, you can use the provided
-requirements file.
+To install all requirements for development and testing, you can install a selection of dependencies.
 
 .. code-block:: bash
 
-    $ pip install -r resources/requirements-develop.txt
+    $ pip install -e .
+    $ pip install -e .[tests]
+    $ pip install -e .[dev]
 
 Testing the code
 ````````````````
@@ -20,17 +21,31 @@ Testing the code
 before you submit a pull request. ``py.test`` also runs PEP8 and PyFlakes checks
 on every run.
 
+We created a Makefile to make some commands more easy to run
+
 This is how you execute the tests and checks from the repository root directory.
 
 .. code-block:: bash
 
     $ py.test
 
+Or with the shortcut in the Makefile.
+
+.. code-block:: bash
+
+    $ make tests
+
 If you want to generate a coverage report, you can use the following command.
 
 .. code-block:: bash
 
-    $ py.test --cov=omnibus --cov-report=html .
+    $ make coverage
+
+If you want a coverage report with html output.
+
+.. code-block:: bash
+
+    $ make coverage-html
 
 Documentation
 `````````````

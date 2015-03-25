@@ -22,4 +22,12 @@ class TestModel(models.Model):
     link = AnyLinkField()
 
     def __str__(self):
-        return str(self.link)
+        return '[{0}] - {1}'.format(self.pk, self.link)
+
+
+@python_2_unicode_compatible
+class AnotherTestModel(models.Model):
+    link = AnyLinkField()
+
+    def __str__(self):
+        return '[{0}] - {1}'.format(self.pk, self.link)
