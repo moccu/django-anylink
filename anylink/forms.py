@@ -21,7 +21,8 @@ class AnyLinkAdminForm(forms.ModelForm):
                 objects = self.in_use(self.instance)
                 if len(objects) > 1 and not data.get('confirmation'):
                     objects_used = u', '.join([unicode(obj) for obj in objects])
-                    msg = _(u'The following objects using this link: {0}'.format(objects_used))
+                    msg = _(u'The following objects are using this link already: {0}'.format(
+                        objects_used))
                     self.fields['confirmation'].widget = forms.CheckboxInput()
                     self.fields['confirmation'].required = True
                     add_error(self, 'confirmation', _('Confirm your changes here.'), data)
