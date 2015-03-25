@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from .compat import get_all_related_objects, add_error
@@ -16,14 +17,15 @@ class AnyLinkAdminForm(forms.ModelForm):
         data = self.cleaned_data
 
         if self.instance.pk:
-            objects = self.in_use(self.instance)
-            if len(objects) > 1 and not data.get('confirmation'):
-                objects_used = u', '.join([unicode(obj) for obj in objects])
-                msg = _(u'The following objects using this link: {0}'.format(objects_used))
-                self.fields['confirmation'].widget = forms.CheckboxInput()
-                self.fields['confirmation'].required = True
-                add_error(self, 'confirmation', _('Confirm your changes here.'), data)
-                raise forms.ValidationError(msg)
+            if settings.ANYLINK_REUSABLE:
+                objects = self.in_use(self.instance)
+                if len(objects) > 1 and not data.get('confirmation'):
+                    objects_used = u', '.join([unicode(obj) for obj in objects])
+                    msg = _(u'The following objects using this link: {0}'.format(objects_used))
+                    self.fields['confirmation'].widget = forms.CheckboxInput()
+                    self.fields['confirmation'].required = True
+                    add_error(self, 'confirmation', _('Confirm your changes here.'), data)
+                    raise forms.ValidationError(msg)
         return data
 
     def in_use(self, obj):

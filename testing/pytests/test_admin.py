@@ -158,7 +158,9 @@ class TestAnyLinkAdmin:
         assert response.status_code == 302
         assert response['Location'] == 'http://testserver/admin/anylink/anylink/'
 
-    def test_change_view_context(self, admin_client, settings):
+    def test_change_view_context_reusable_disabled(self, admin_client, settings):
+        settings.ANYLINK_REUSABLE = False
+
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
         response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
 
@@ -168,7 +170,9 @@ class TestAnyLinkAdmin:
         assert isinstance(field.widget, forms.HiddenInput)
         assert len(response.context_data['link_extensions']) == len(settings.ANYLINK_EXTENSIONS)
 
-    def test_change_view_anylink_used_multiple(self, admin_client, settings):
+    def test_change_view_reusable_enabled(self, admin_client, settings):
+        settings.ANYLINK_REUSABLE = True
+
         link1 = AnyLink.objects.create(link_type='external_url', external_url='http://foo1')
         link2 = AnyLink.objects.create(link_type='external_url', external_url='http://foo2')
 

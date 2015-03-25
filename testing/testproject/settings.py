@@ -45,3 +45,5 @@ ANYLINK_EXTENSIONS = (
 )
 
 STATIC_URL = '/static/'
+
+ANYLINK_REUSABLE = False
