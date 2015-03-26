@@ -35,7 +35,7 @@ htmlhelp_basename = 'django-anylinkdoc'
 
 latex_elements = {
     'papersize': 'a4paper',
-    #'pointsize': '10pt',
+    # 'pointsize': '10pt',
 }
 latex_documents = [(
     'index', 'django-anylink.tex', u'django-anylink Documentation',

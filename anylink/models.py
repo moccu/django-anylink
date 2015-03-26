@@ -119,6 +119,16 @@ class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
         if self.link_type:
             self.extensions[self.link_type].clean(self)
 
+    def get_used_by(self):
+        used_by = []
+        related = compat.get_all_related_objects(AnyLink)
+        for rel in related:
+            reversed_name = rel.get_accessor_name()
+            reversed_manager = getattr(self, reversed_name)
+            used_by.extend(reversed_manager.all())
+
+        return used_by if len(used_by) > 1 else []
+
 
 try:
     # If south is available, add rules for anylink field.

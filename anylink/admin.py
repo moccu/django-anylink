@@ -77,9 +77,8 @@ class AnyLinkAdmin(admin.ModelAdmin):
 
     def is_rtelink_popup(self, request):
         return (
-            '_popup' in request.POST
-            and 'ed' in request.GET
-            and EDITOR_ID_RE.match(request.GET['ed']) is not None
+            '_popup' in request.POST and 'ed' in request.GET and
+            EDITOR_ID_RE.match(request.GET['ed']) is not None
         )
 
     def response_rtelink(self, request, obj):
@@ -90,10 +89,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
             })
 
     def is_addorchange_popup(self, request):
-        return (
-            '_popup' in request.POST
-            and 'aoc' in request.GET
-        )
+        return ('_popup' in request.POST and 'aoc' in request.GET)
 
     def response_addorchange(self, request, obj):
         return SimpleTemplateResponse(

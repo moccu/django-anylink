@@ -12,10 +12,8 @@ tests:
 
 
 coverage:
-	coverage run `which py.test` ${OPTS} testing/pytests
-	coverage report -m --include=${APP}/*
+	py.test ${OPTS} --cov=${APP} --cov-report=term-missing testing/pytests
 
 
 coverage-html:
-	coverage run `which py.test` ${OPTS} testing/pytests
-	coverage html -d htmlcov --include=${APP}/*
+	py.test ${OPTS} --cov=${APP} --cov-report=term-missing --cov-report=html testing/pytests

@@ -7,27 +7,23 @@ from setuptools.command.test import test as TestCommand
 
 
 test_requires = [
-    'py>=1.4.20',
-    'pyflakes>=0.7.3',
-    'pytest>=2.5.2',
+    'py>=1.4.26',
+    'pyflakes>=0.8.1',
+    'pytest>=2.6.4',
     'pytest-cache>=1.0',
-    'pytest-cov>=1.6',
+    'pytest-cov>=1.8.1',
     'pytest-flakes==0.2',
-    'pytest-pep8==1.0.5',
-    'pytest-django==2.8',
+    'pytest-pep8==1.0.6',
+    'pytest-django==2.8.0',
     'coverage==3.7.1',
     'mock==1.0.1',
-    'pep8==1.4.6',
+    'pep8==1.6.2',
+    'tox',
 ]
 
 
 install_requires = [
     'Django>=1.5',
-]
-
-
-dev_requires = [
-    'tox',
 ]
 
 
@@ -68,7 +64,6 @@ setup(
     extras_require={
         'docs': docs_requires,
         'tests': test_requires,
-        'dev': dev_requires,
     },
     tests_require=test_requires,
     install_requires=install_requires,

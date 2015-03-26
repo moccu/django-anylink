@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 
-from .compat import get_all_related_objects, add_error
+from .compat import add_error
 from .models import AnyLink
 
 
@@ -17,8 +17,8 @@ class AnyLinkAdminForm(forms.ModelForm):
     def clean(self):
         data = self.cleaned_data
 
-        if self.instance.pk and settings.ANYLINK_ALLOW_MULTIPLE_USE:
-            objects = self.in_use(self.instance)
+        if self.instance.pk and getattr(settings, 'ANYLINK_ALLOW_MULTIPLE_USE', False):
+            objects = self.instance.get_used_by()
             if len(objects) > 1 and not data.get('confirmation'):
                 self.fields['confirmation'].widget = forms.CheckboxInput()
                 self.fields['confirmation'].required = True
@@ -29,13 +29,3 @@ class AnyLinkAdminForm(forms.ModelForm):
                     objects_used))
                 raise forms.ValidationError(msg)
         return data
-
-    def in_use(self, obj):
-        used_by = []
-        related = get_all_related_objects(AnyLink)
-        for rel in related:
-            reversed_name = rel.get_accessor_name()
-            reversed_manager = getattr(obj, reversed_name)
-            used_by.extend(reversed_manager.all())
-
-        return used_by if len(used_by) > 1 else []
