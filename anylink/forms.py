@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from .compat import get_all_related_objects, add_error
 from .models import AnyLink
@@ -26,7 +26,7 @@ class AnyLinkAdminForm(forms.ModelForm):
                         objects_used))
                     self.fields['confirmation'].widget = forms.CheckboxInput()
                     self.fields['confirmation'].required = True
-                    add_error(self, 'confirmation', _('Confirm your changes here.'), data)
+                    add_error(self, 'confirmation', _('Confirm your changes.'), data)
                     raise forms.ValidationError(msg)
         return data
 

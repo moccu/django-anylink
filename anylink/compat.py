@@ -41,6 +41,6 @@ def get_all_related_objects(cls):
 def add_error(form, field, msg, cleaned_data):
     if django.VERSION[:2] <= (1, 6):
         form._errors[field] = form.error_class([msg])
-        del cleaned_data[field]
+        cleaned_data.pop(field, None)
     else:
         form.add_error(field, msg)
