@@ -158,8 +158,15 @@ class TestAnyLinkAdmin:
         assert response.status_code == 302
         assert response['Location'] == 'http://testserver/admin/anylink/anylink/'
 
-    def test_change_view_context_reusable_disabled(self, admin_client, settings):
-        settings.ANYLINK_REUSABLE = False
+    def test_change_view_context(self, admin_client, settings):
+        obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
+        response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
+
+        assert response.status_code == 200
+        assert len(response.context_data['link_extensions']) == len(settings.ANYLINK_EXTENSIONS)
+
+    def test_change_view_reusable_disabled(self, admin_client, settings):
+        settings.ANYLINK_ALLOW_MULTIPLE_USE = False
 
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
         response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
@@ -168,10 +175,9 @@ class TestAnyLinkAdmin:
         field = response.context['adminform'].form.fields['confirmation']
         assert not field.required
         assert isinstance(field.widget, forms.HiddenInput)
-        assert len(response.context_data['link_extensions']) == len(settings.ANYLINK_EXTENSIONS)
 
     def test_change_view_reusable_enabled(self, admin_client, settings):
-        settings.ANYLINK_REUSABLE = True
+        settings.ANYLINK_ALLOW_MULTIPLE_USE = True
 
         link1 = AnyLink.objects.create(link_type='external_url', external_url='http://foo1')
         link2 = AnyLink.objects.create(link_type='external_url', external_url='http://foo2')
