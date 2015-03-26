@@ -6,13 +6,11 @@ If you like to contribute to this project please read the following guides.
 Django Code
 -----------
 
-To install all requirements for development and testing, you can install a selection of dependencies.
+You have to install some dependencies for development and testing.
 
 .. code-block:: bash
 
-    $ pip install -e .
     $ pip install -e .[tests]
-    $ pip install -e .[dev]
 
 Testing the code
 ````````````````
@@ -21,7 +19,7 @@ Testing the code
 before you submit a pull request. ``py.test`` also runs PEP8 and PyFlakes checks
 on every run.
 
-We created a Makefile to make some commands more easy to run
+We created a Makefile to make some commands more easy to run.
 
 This is how you execute the tests and checks from the repository root directory.
 

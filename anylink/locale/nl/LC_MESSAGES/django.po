@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-25 13:02+0100\n"
+"POT-Creation-Date: 2015-03-26 09:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,56 +30,48 @@ msgstr "{0} is verplicht"
 msgid "external url"
 msgstr "externe url"
 
-#: forms.py:24
+#: forms.py:25
 #, python-brace-format
 msgid "The following objects are using this link already: {0}"
 msgstr "De volgende objecten gebruiken deze link al: {0}"
 
-#: forms.py:28
-msgid "Confirm your changes here."
-msgstr "Bevestig de aanpassingen hier."
+#: forms.py:29
+msgid "Confirm your changes."
+msgstr "Bevestig de aanpassingen."
 
-#: models.py:17
+#: models.py:18
 msgid "same window"
 msgstr "hetzelfde venster"
 
-#: models.py:18
+#: models.py:19
 msgid "new window"
 msgstr "nieuw venster"
 
-#: models.py:19
-msgid "parent frame"
-msgstr "bovenliggend frame"
-
-#: models.py:20
-msgid "top frame"
-msgstr "top frame"
-
-#: models.py:96
+#: models.py:95
 msgid "text"
 msgstr "tekst"
 
-#: models.py:97
+#: models.py:96
 msgid "title"
 msgstr "titel"
 
-#: models.py:99
+#: models.py:98
 msgid "target"
 msgstr "doel"
 
-#: models.py:101
+#: models.py:100
 msgid "css class"
 msgstr "css klasse"
 
-#: models.py:104
+#: models.py:103
 msgid "type"
 msgstr "type"
 
-#: models.py:107
+#: models.py:106
 msgid "Link"
 msgstr "Link"
 
-#: models.py:108
+#: models.py:107
 msgid "Links"
 msgstr "Links"
 
@@ -90,3 +82,9 @@ msgstr "Voeg link toe"
 #: widgets.py:61 widgets.py:62
 msgid "Change link"
 msgstr "Verander link"
+
+#~ msgid "parent frame"
+#~ msgstr "bovenliggend frame"
+
+#~ msgid "top frame"
+#~ msgstr "top frame"

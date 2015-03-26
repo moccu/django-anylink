@@ -12,12 +12,11 @@ from django.utils.encoding import python_2_unicode_compatible, force_text
 
 from . import compat
 
-SELF, BLANK, PARENT, TOP = ('_self', '_blank', '_parent', '_top')
+
+SELF, BLANK = ('_self', '_blank')
 TARGET_CHOICES = (
     (SELF, _('same window')),
     (BLANK, _('new window')),
-    (PARENT, _('parent frame')),
-    (TOP, _('top frame')),
 )
 
 
