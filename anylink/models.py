@@ -121,13 +121,13 @@ class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
 
     def get_used_by(self):
         used_by = []
-        related = compat.get_all_related_objects(AnyLink)
-        for rel in related:
-            reversed_name = rel.get_accessor_name()
+        related_models = compat.get_all_related_objects(self.__class__)
+        for relation in related_models:
+            reversed_name = relation.get_accessor_name()
             reversed_manager = getattr(self, reversed_name)
             used_by.extend(reversed_manager.all())
 
-        return used_by if len(used_by) > 1 else []
+        return used_by
 
 
 try:
