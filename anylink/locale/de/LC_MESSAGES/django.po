@@ -5,47 +5,46 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-26 09:18+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-03-30 15:59+0200\n"
+"PO-Revision-Date: 2015-03-30 16:00+0100\n"
+"Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: apps.py:9
 msgid "AnyLink"
-msgstr ""
+msgstr "Link"
 
 #: extensions.py:46
-#, python-brace-format
 msgid "{0} is required"
-msgstr "{0} ist notwendig"
+msgstr "{0} wird benötigt"
 
 #: extensions.py:51
 msgid "external url"
-msgstr "externe Url"
+msgstr "Externe URL"
 
 #: forms.py:25
-#, python-brace-format
-msgid "The following objects are using this link already: {0}"
-msgstr "Die folgende Objekte verwenden diesen Link schon: {0}"
-
-#: forms.py:29
 msgid "Confirm your changes."
-msgstr "Bestätigen sie die Änderungen."
+msgstr "Änderungen bitte bestätigen."
+
+#: forms.py:28
+msgid "The following objects are using this link already: {0}"
+msgstr "Die folgende Objekte verwenden diesen Link bereits: {0}"
 
 #: models.py:18
 msgid "same window"
-msgstr "gleiches Fenster"
+msgstr "Gleiches Fenster"
 
 #: models.py:19
 msgid "new window"
-msgstr "neues Fenster"
+msgstr "Neues Fenster"
 
 #: models.py:95
 msgid "text"
@@ -61,7 +60,7 @@ msgstr "Ziel"
 
 #: models.py:100
 msgid "css class"
-msgstr "css Klasse"
+msgstr "CSS Klasse"
 
 #: models.py:103
 msgid "type"
@@ -75,13 +74,17 @@ msgstr "Link"
 msgid "Links"
 msgstr "Links"
 
-#: widgets.py:61 widgets.py:62
+#: widgets.py:66 widgets.py:67
 msgid "Add link"
 msgstr "Link hinzufügen"
 
-#: widgets.py:61 widgets.py:62
+#: widgets.py:66 widgets.py:67
 msgid "Change link"
 msgstr "Link ändern"
+
+#: widgets.py:73
+msgid "Select link"
+msgstr "Link auswählen"
 
 #~ msgid "parent frame"
 #~ msgstr "Übergeordneter Frame"
