@@ -12,4 +12,4 @@ node_modules
 db.sqlite3
 docs/build
 htmlcov
-*.x.xml
+junit-*.xml
