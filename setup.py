@@ -6,6 +6,18 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
 
+version = '0.2.0'
+
+
+if sys.argv[-1] == 'publish':
+    os.system('python setup.py sdist upload')
+    os.system('python setup.py bdist_wheel upload')
+    print('You probably want to also tag the version now:')
+    print('  git tag -a %s -m "version %s"' % (version, version))
+    print('  git push --tags')
+    sys.exit()
+
+
 test_requires = [
     'py>=1.4.26',
     'pyflakes>=0.8.1',
@@ -55,7 +67,7 @@ class PyTest(TestCommand):
 
 setup(
     name='django-anylink',
-    version='0.1.0',
+    version=version,
     description='Generic links for Django models.',
     long_description=read('README.rst') + '\n\n' + read('CHANGES.rst'),
     author='Moccu GmbH & Co. KG',
