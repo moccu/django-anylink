@@ -12,12 +12,11 @@ from django.utils.encoding import python_2_unicode_compatible, force_text
 
 from . import compat
 
-SELF, BLANK, PARENT, TOP = ('_self', '_blank', '_parent', '_top')
+
+SELF, BLANK = ('_self', '_blank')
 TARGET_CHOICES = (
     (SELF, _('same window')),
     (BLANK, _('new window')),
-    (PARENT, _('parent frame')),
-    (TOP, _('top frame')),
 )
 
 
@@ -119,6 +118,16 @@ class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
     def clean(self):
         if self.link_type:
             self.extensions[self.link_type].clean(self)
+
+    def get_used_by(self):
+        used_by = []
+        related_models = compat.get_all_related_objects(self.__class__)
+        for relation in related_models:
+            reversed_name = relation.get_accessor_name()
+            reversed_manager = getattr(self, reversed_name)
+            used_by.extend(reversed_manager.all())
+
+        return used_by
 
 
 try:

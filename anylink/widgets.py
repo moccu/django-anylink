@@ -14,6 +14,11 @@ CHANGE_LINK = (
     u'data-add="{3}" data-change="{4}">{5}</a>'
 )
 
+SELECT_LINK = (
+    u'&nbsp;<a href="{0}{1}" class="show-popup" id="lookup_id_{2}" '
+    u'onclick="return window.AnyLinkAddOrChangeWidget.select(this);">{3}</a>'
+)
+
 DELETE_IMG = (
     u'&nbsp;<img src="{0}admin/img/icon_deletelink.gif" id="delete_id_{1}" '
     u'onclick="return window.AnyLinkAddOrChangeWidget.delete(this);" '
@@ -61,6 +66,12 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
                 _('Add link'), _('Change link'),
                 not value and _('Add link') or _('Change link')
             ))
+
+            if getattr(settings, 'ANYLINK_ALLOW_MULTIPLE_USE', False):
+                output.append(SELECT_LINK.format(
+                    related_url, url_params, name,
+                    _('Select link'),
+                ))
 
         output.append(self.delete_button(name, value))
         return mark_safe(''.join(output))

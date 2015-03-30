@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-30 15:59+0200\n"
+"PO-Revision-Date: 2015-03-30 16:00+0100\n"
+"Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#: apps.py:9
+msgid "AnyLink"
+msgstr "Link"
+
+#: extensions.py:46
+msgid "{0} is required"
+msgstr "{0} wird benötigt"
+
+#: extensions.py:51
+msgid "external url"
+msgstr "Externe URL"
+
+#: forms.py:25
+msgid "Confirm your changes."
+msgstr "Änderungen bitte bestätigen."
+
+#: forms.py:28
+msgid "The following objects are using this link already: {0}"
+msgstr "Die folgende Objekte verwenden diesen Link bereits: {0}"
+
+#: models.py:18
+msgid "same window"
+msgstr "Gleiches Fenster"
+
+#: models.py:19
+msgid "new window"
+msgstr "Neues Fenster"
+
+#: models.py:95
+msgid "text"
+msgstr "Text"
+
+#: models.py:96
+msgid "title"
+msgstr "Titel"
+
+#: models.py:98
+msgid "target"
+msgstr "Ziel"
+
+#: models.py:100
+msgid "css class"
+msgstr "CSS Klasse"
+
+#: models.py:103
+msgid "type"
+msgstr "Typ"
+
+#: models.py:106
+msgid "Link"
+msgstr "Link"
+
+#: models.py:107
+msgid "Links"
+msgstr "Links"
+
+#: widgets.py:66 widgets.py:67
+msgid "Add link"
+msgstr "Link hinzufügen"
+
+#: widgets.py:66 widgets.py:67
+msgid "Change link"
+msgstr "Link ändern"
+
+#: widgets.py:73
+msgid "Select link"
+msgstr "Link auswählen"
+
+#~ msgid "parent frame"
+#~ msgstr "Übergeordneter Frame"
+
+#~ msgid "top frame"
+#~ msgstr "Oberer Frame"

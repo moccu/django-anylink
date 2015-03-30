@@ -8,6 +8,7 @@ from django.template.response import SimpleTemplateResponse
 from django.utils.html import escape
 from django.utils import importlib
 
+from .forms import AnyLinkAdminForm
 from .models import AnyLink
 
 
@@ -19,6 +20,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
     list_display = ('get_absolute_url', 'link_type', 'text')
     list_filter = ('link_type', 'target')
     search_fields = ('text', 'title')
+    form = AnyLinkAdminForm
 
     def __init__(self, *args, **kwargs):
         super(AnyLinkAdmin, self).__init__(*args, **kwargs)
@@ -75,9 +77,8 @@ class AnyLinkAdmin(admin.ModelAdmin):
 
     def is_rtelink_popup(self, request):
         return (
-            '_popup' in request.POST
-            and 'ed' in request.GET
-            and EDITOR_ID_RE.match(request.GET['ed']) is not None
+            '_popup' in request.POST and 'ed' in request.GET and
+            EDITOR_ID_RE.match(request.GET['ed']) is not None
         )
 
     def response_rtelink(self, request, obj):
@@ -88,10 +89,7 @@ class AnyLinkAdmin(admin.ModelAdmin):
             })
 
     def is_addorchange_popup(self, request):
-        return (
-            '_popup' in request.POST
-            and 'aoc' in request.GET
-        )
+        return ('_popup' in request.POST and 'aoc' in request.GET)
 
     def response_addorchange(self, request, obj):
         return SimpleTemplateResponse(
