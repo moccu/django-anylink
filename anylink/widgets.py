@@ -51,7 +51,7 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
 
         if self.rel.to in self.admin_site._registry:
             related_url = reverse('admin:{0}_{1}_changelist'.format(
-                self.rel.to._meta.app_label, self.rel.to._meta.module_name
+                self.rel.to._meta.app_label, self.rel.to._meta.model_name
             ), current_app=self.admin_site.name)
 
             params = self.url_parameters()
