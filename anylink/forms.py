@@ -13,6 +13,7 @@ class AnyLinkAdminForm(forms.ModelForm):
 
     class Meta:
         model = AnyLink
+        fields = '__all__'
 
     def clean(self):
         data = self.cleaned_data
