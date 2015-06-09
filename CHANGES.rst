@@ -1,6 +1,12 @@
 Changes
 =======
 
+0.3.0 (unreleased)
+------------------
+
+* Add support for django 1.8 and drop support for django 1.5
+
+
 0.2.0 (2015-03-30)
 ------------------
 

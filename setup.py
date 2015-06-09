@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
 
-version = '0.2.0'
+version = '0.3.0'
 
 
 if sys.argv[-1] == 'publish':
@@ -35,7 +35,7 @@ test_requires = [
 
 
 install_requires = [
-    'Django>=1.5',
+    'Django>=1.6',
 ]
 
 
