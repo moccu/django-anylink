@@ -14,3 +14,4 @@ docs/build
 htmlcov
 junit-*.xml
 dist
+build
