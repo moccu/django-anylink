@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-30 15:59+0200\n"
+"POT-Creation-Date: 2015-08-19 15:10+0200\n"
 "PO-Revision-Date: 2015-03-30 16:00+0100\n"
 "Last-Translator: Stephan Jaekel <stephan.jaekel@moccu.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,7 @@ msgid "AnyLink"
 msgstr "Link"
 
 #: extensions.py:46
+#, python-brace-format
 msgid "{0} is required"
 msgstr "{0} wird benötigt"
 
@@ -30,11 +31,16 @@ msgstr "{0} wird benötigt"
 msgid "external url"
 msgstr "Externe URL"
 
-#: forms.py:25
-msgid "Confirm your changes."
-msgstr "Änderungen bitte bestätigen."
+#: forms.py:14
+msgid "Confirmation"
+msgstr "Bestätigung"
 
 #: forms.py:28
+msgid "Please confirm your changes."
+msgstr "Bitte bestätigen Sie die Änderungen."
+
+#: forms.py:31
+#, python-brace-format
 msgid "The following objects are using this link already: {0}"
 msgstr "Die folgende Objekte verwenden diesen Link bereits: {0}"
 
@@ -85,9 +91,3 @@ msgstr "Link ändern"
 #: widgets.py:73
 msgid "Select link"
 msgstr "Link auswählen"
-
-#~ msgid "parent frame"
-#~ msgstr "Übergeordneter Frame"
-
-#~ msgid "top frame"
-#~ msgstr "Oberer Frame"

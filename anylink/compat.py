@@ -30,7 +30,16 @@ def get_app_module(module_name):
 
 def get_all_related_objects(cls):
     if django.VERSION[:2] <= (1, 7):
-        return cls._meta.get_all_related_objects()
+        # Due to some circumstances, it might happen that the related objects
+        # cache is filled before all models are loaded. At this place, we reset
+        # the cache if the list is not filled with at least one entry.
+        related_objects = cls._meta.get_all_related_objects()
+
+        if len(related_objects) < 1:
+            cls._meta._fill_related_objects_cache()
+            related_objects = cls._meta.get_all_related_objects()
+
+        return related_objects
     else:
         return [
             f for f in cls._meta.get_fields()
