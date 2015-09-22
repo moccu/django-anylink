@@ -2,7 +2,7 @@
 Generic linking for Django
 ==========================
 
-.. image:: https://badge.fury.io/py/django-ultimatethumb.png
+.. image:: https://badge.fury.io/py/django-anylink.png
     :target: http://badge.fury.io/py/django-anylink
     :alt: Latest PyPI version
 
@@ -10,8 +10,8 @@ Generic linking for Django
    :target: https://travis-ci.org/moccu/django-anylink
    :alt: Latest Travis CI build status
 
-.. image:: https://coveralls.io/repos/moccu/django-anylink/badge.svg?branch=master&service=github
-  :target: https://coveralls.io/github/moccu/django-anylink?branch=master
+.. image:: https://coveralls.io/repos/moccu/django-anylink/badge.svg
+  :target: https://coveralls.io/github/moccu/django-anylink
   :alt: Coverage of master build
 
 .. image:: https://readthedocs.org/projects/django-anylink/badge/?version=latest
