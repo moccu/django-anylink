@@ -2,13 +2,22 @@
 Generic linking for Django
 ==========================
 
-.. image:: https://pypip.in/v/django-anylink/badge.png
-    :target: https://pypi.python.org/pypi/django-anylink
+.. image:: https://badge.fury.io/py/django-ultimatethumb.png
+    :target: http://badge.fury.io/py/django-anylink
     :alt: Latest PyPI version
 
 .. image:: https://travis-ci.org/moccu/django-anylink.png
    :target: https://travis-ci.org/moccu/django-anylink
    :alt: Latest Travis CI build status
+
+.. image:: https://coveralls.io/repos/moccu/django-anylink/badge.svg?branch=master&service=github
+  :target: https://coveralls.io/github/moccu/django-anylink?branch=master
+  :alt: Coverage of master build
+
+.. image:: https://readthedocs.org/projects/django-anylink/badge/?version=latest
+    :target: https://readthedocs.org/projects/django-anylink/?badge=latest
+    :alt: Latest read the docs build
+
 
 `django-anylink` is a generic linking module for Django. Using this module, you
 can create links for many usecases.
