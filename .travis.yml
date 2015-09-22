@@ -31,7 +31,7 @@ script:
   - tox -e "$TRAVIS_PYTHON_VERSION-$DJANGO_VERSION"
 
 after_success:
-  - pip install "coveralls==0.4.1" coverage
+  - pip install "coveralls==1.0" coverage
   - coverage report
   - coveralls
 
