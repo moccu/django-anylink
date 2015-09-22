@@ -6,7 +6,10 @@ from django.contrib import admin
 from django.conf import settings
 from django.template.response import SimpleTemplateResponse
 from django.utils.html import escape
-from django.utils import importlib
+try:
+    import importlib
+except ImportError:
+    from django.utils import importlib
 
 from .forms import AnyLinkAdminForm
 from .models import AnyLink

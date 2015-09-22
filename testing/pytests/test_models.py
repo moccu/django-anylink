@@ -7,20 +7,22 @@ from django.core.exceptions import ImproperlyConfigured
 from anylink.models import AnyLink, do_anylink_extension_setup
 
 
-class AnyLinkTest(AnyLink):
-    pass
-
-
 class TestAnyLinkMetaclass:
+    def setup(self):
+        class AnyLinkTest(AnyLink):
+            pass
+
+        self.anylink_test_class = AnyLinkTest
+
     def test_extension_registration(self, settings):
         settings.ANYLINK_EXTENSIONS = (
             'anylink.extensions.ExternalLink',
         )
 
-        do_anylink_extension_setup(AnyLinkTest)
+        do_anylink_extension_setup(self.anylink_test_class)
 
-        assert len(AnyLinkTest.extensions) == 1
-        assert hasattr(AnyLinkTest, 'get_link_type_display')
+        assert len(self.anylink_test_class.extensions) == 1
+        assert hasattr(self.anylink_test_class, 'get_link_type_display')
 
     def test_extension_registration_twice(self, settings):
         settings.ANYLINK_EXTENSIONS = (
@@ -29,18 +31,18 @@ class TestAnyLinkMetaclass:
         )
 
         with pytest.raises(ImproperlyConfigured):
-            do_anylink_extension_setup(AnyLinkTest)
+            do_anylink_extension_setup(self.anylink_test_class)
 
     def test_extension_registration_with_options(self, settings):
         settings.ANYLINK_EXTENSIONS = (
             ('anylink.extensions.ExternalLink', {'test': 'foo'}),
         )
 
-        do_anylink_extension_setup(AnyLinkTest)
+        do_anylink_extension_setup(self.anylink_test_class)
 
-        assert len(AnyLinkTest.extensions) == 1
-        assert AnyLinkTest.extensions['external_url'].kwargs == {'test': 'foo'}
-        assert hasattr(AnyLinkTest, 'get_link_type_display')
+        assert len(self.anylink_test_class.extensions) == 1
+        assert self.anylink_test_class.extensions['external_url'].kwargs == {'test': 'foo'}
+        assert hasattr(self.anylink_test_class, 'get_link_type_display')
 
 
 class TestAnyLink:

@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import mock
 import pytest
 
+import django
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -90,14 +91,14 @@ class TestAnyLinkAdmin:
         assert response.status_code == 200
         assert (
             "opener.tinymce.plugins.AnyLink.popupCallback('ed1', '{0}');"
-        ).format(AnyLink.objects.get().get_rtelink_id()) in force_text(force_text(response.content))
+        ).format(AnyLink.objects.get().get_rtelink_id()) in force_text(response.content)
 
     def test_response_addorchange_popup_add(self, admin_client):
         response = admin_client.post('/admin/anylink/anylink/add/?aoc=1', data={
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
-            'external_url': 'http://test.de'
+            'external_url': 'http://test.de/'
         })
 
         assert response.status_code == 200
@@ -110,13 +111,18 @@ class TestAnyLinkAdmin:
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
-            'external_url': 'http://test.de'
+            'external_url': 'http://test.de/'
         })
 
         assert response.status_code == 200
-        assert (
-            'opener.dismissAddAnotherPopup(window, "{0}", "http://test.de/");'
-        ).format(AnyLink.objects.get().pk) in force_text(response.content)
+        if django.VERSION[:2] >= (1, 8):
+            assert (
+                'opener.dismissAddRelatedObjectPopup(window, "{0}", "http://test.de/");'
+            ).format(AnyLink.objects.get().pk) in force_text(response.content)
+        else:
+            assert (
+                'opener.dismissAddAnotherPopup(window, "{0}", "http://test.de/");'
+            ).format(AnyLink.objects.get().pk) in force_text(response.content)
 
     def test_response_rtelink_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
@@ -124,7 +130,7 @@ class TestAnyLinkAdmin:
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
-            'external_url': 'http://test.de'
+            'external_url': 'http://test.de/'
         })
 
         assert response.status_code == 200
@@ -138,7 +144,7 @@ class TestAnyLinkAdmin:
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
-            'external_url': 'http://test.de'
+            'external_url': 'http://test.de/'
         })
 
         assert response.status_code == 200
@@ -152,11 +158,20 @@ class TestAnyLinkAdmin:
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
-            'external_url': 'http://test.de'
+            'external_url': 'http://test.de/'
         })
 
-        assert response.status_code == 302
-        assert response['Location'] == 'http://testserver/admin/anylink/anylink/'
+        if django.VERSION[:2] >= (1, 8):
+            assert response.status_code == 200
+            assert response.context_data == {
+                'action': 'change',
+                'new_value': '1',
+                'obj': 'http://test.de/',
+                'value': '1'
+            }
+        else:
+            assert response.status_code == 302
+            assert response['Location'] == 'http://testserver/admin/anylink/anylink/'
 
     def test_change_view_context(self, admin_client, settings):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
@@ -168,7 +183,7 @@ class TestAnyLinkAdmin:
     def test_change_view_reusable_disabled(self, admin_client, settings):
         settings.ANYLINK_ALLOW_MULTIPLE_USE = False
 
-        obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
+        obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo/')
         response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
 
         assert response.status_code == 200
@@ -179,8 +194,8 @@ class TestAnyLinkAdmin:
     def test_change_view_reusable_enabled(self, admin_client, settings):
         settings.ANYLINK_ALLOW_MULTIPLE_USE = True
 
-        link1 = AnyLink.objects.create(link_type='external_url', external_url='http://foo1')
-        link2 = AnyLink.objects.create(link_type='external_url', external_url='http://foo2')
+        link1 = AnyLink.objects.create(link_type='external_url', external_url='http://foo1/')
+        link2 = AnyLink.objects.create(link_type='external_url', external_url='http://foo2/')
 
         obj1 = TestModel.objects.create(link=link1)
         obj2 = TestModel.objects.create(link=link1)
@@ -191,7 +206,7 @@ class TestAnyLinkAdmin:
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
-            'external_url': 'http://test.de'
+            'external_url': 'http://test.de/'
         }
         response = admin_client.post('/admin/anylink/anylink/{0}/'.format(link1.pk), data=data)
 

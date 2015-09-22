@@ -4,7 +4,10 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.base import ModelBase
-from django.utils.module_loading import import_by_path
+try:
+    from django.utils.module_loading import import_string as import_by_path
+except ImportError:
+    from django.utils.module_loading import import_by_path
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
 from django.utils import six

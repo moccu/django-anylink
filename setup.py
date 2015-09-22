@@ -3,7 +3,7 @@ import codecs
 import os
 import sys
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
+from setuptools.command.test import test as test_command
 
 
 version = '0.3.0'
@@ -20,15 +20,15 @@ if sys.argv[-1] == 'publish':
 
 test_requires = [
     'py>=1.4.26',
-    'pyflakes>=0.8.1',
-    'pytest>=2.6.4',
+    'pyflakes>=1.0.0',
+    'pytest>=2.8.0',
     'pytest-cache>=1.0',
-    'pytest-cov>=1.8.1',
+    'pytest-cov>=2.1.0',
     'pytest-flakes==0.2',
     'pytest-pep8==1.0.6',
     'pytest-django==2.8.0',
-    'coverage==3.7.1',
-    'mock==1.0.1',
+    'coverage==4.0',
+    'mock==1.3.0',
     'pep8==1.6.2',
     'tox',
 ]
@@ -51,10 +51,10 @@ def read(*parts):
         return fp.read()
 
 
-class PyTest(TestCommand):
+class PyTest(test_command):
 
     def finalize_options(self):
-        TestCommand.finalize_options(self)
+        test_command.finalize_options(self)
         self.test_args = []
         self.test_suite = True
 
@@ -99,6 +99,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Programming Language :: Python :: Implementation :: CPython',
         'Framework :: Django',
