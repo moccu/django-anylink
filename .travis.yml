@@ -17,6 +17,7 @@ matrix:
   exclude:
   - python: '2.6'
     env: DJANGO_VERSION=1.7.x
+    env: DJANGO_VERSION=1.8.x
 
 install:
   - pip install tox
