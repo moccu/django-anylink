@@ -18,7 +18,7 @@ window.AnyLinkAddOrChangeWidget = {
 		}
 
 		win = window.open(url + value + '/?' + params, window_name,
-			'height=500,width=800,resizable=yes,scrollbars=yes');
+			'height=710,width=980,resizable=yes,scrollbars=yes');
 
 		win.focus();
 		return false;
