@@ -54,8 +54,8 @@
 
 				ed.windowManager.open({
 					file : tinyMCE.settings.anylink_url + anylink_id + '/?ed=' + ed.id + '&_popup=1',
-					width : 750,
-					height : 440,
+					width : 980,
+					height : 710,
 					inline : 1
 				}, {
 					plugin_url : url,
