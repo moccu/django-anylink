@@ -10,7 +10,8 @@ from anylink.models import AnyLink, do_anylink_extension_setup
 class TestAnyLinkMetaclass:
     def setup(self):
         class AnyLinkTest(AnyLink):
-            pass
+            class Meta:
+                app_label = 'AnyLinkTest'
 
         self.anylink_test_class = AnyLinkTest
 

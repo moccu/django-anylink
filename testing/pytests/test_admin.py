@@ -27,8 +27,12 @@ class MyCustomAnyLinkForm(ModelForm):
 
 @pytest.mark.django_db
 class TestAnyLinkAdmin:
+    edit_url = '/admin/anylink/anylink/{0}/'
+
     def setup(self):
         self.modeladmin = AnyLinkAdmin(AnyLink, admin.site)
+        if django.VERSION[:2] >= (1, 9):
+            self.edit_url = '/admin/anylink/anylink/{0}/change/'
 
     def test_form_can_be_customized(self, rf, settings, admin_client):
         req = rf.get('/')
@@ -126,7 +130,10 @@ class TestAnyLinkAdmin:
 
     def test_response_rtelink_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
-        response = admin_client.post('/admin/anylink/anylink/{0}/?ed=ed1'.format(obj.pk), data={
+
+        edit_url = '{0}?ed=ed1'.format(self.edit_url)
+
+        response = admin_client.post(edit_url.format(obj.pk), data={
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
@@ -140,7 +147,10 @@ class TestAnyLinkAdmin:
 
     def test_response_addorchange_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
-        response = admin_client.post('/admin/anylink/anylink/{0}/?aoc=1'.format(obj.pk), data={
+
+        edit_url = '{0}?aoc=1'.format(self.edit_url)
+
+        response = admin_client.post(edit_url.format(obj.pk), data={
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
@@ -154,7 +164,7 @@ class TestAnyLinkAdmin:
 
     def test_response_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
-        response = admin_client.post('/admin/anylink/anylink/{0}/'.format(obj.pk), data={
+        response = admin_client.post(self.edit_url.format(obj.pk), data={
             '_popup': '1',
             'link_type': 'external_url',
             'target': '_self',
@@ -162,6 +172,8 @@ class TestAnyLinkAdmin:
         })
 
         if django.VERSION[:2] >= (1, 8):
+            response.context_data = {k: str(v) for k, v in response.context_data.items()}
+
             assert response.status_code == 200
             assert response.context_data == {
                 'action': 'change',
@@ -175,7 +187,7 @@ class TestAnyLinkAdmin:
 
     def test_change_view_context(self, admin_client, settings):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
-        response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
+        response = admin_client.get(self.edit_url.format(obj.pk))
 
         assert response.status_code == 200
         assert len(response.context_data['link_extensions']) == len(settings.ANYLINK_EXTENSIONS)
@@ -184,7 +196,7 @@ class TestAnyLinkAdmin:
         settings.ANYLINK_ALLOW_MULTIPLE_USE = False
 
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo/')
-        response = admin_client.get('/admin/anylink/anylink/{0}/'.format(obj.pk))
+        response = admin_client.get(self.edit_url.format(obj.pk))
 
         assert response.status_code == 200
         field = response.context['adminform'].form.fields['confirmation']
@@ -208,7 +220,7 @@ class TestAnyLinkAdmin:
             'target': '_self',
             'external_url': 'http://test.de/'
         }
-        response = admin_client.post('/admin/anylink/anylink/{0}/'.format(link1.pk), data=data)
+        response = admin_client.post(self.edit_url.format(link1.pk), data=data)
 
         assert response.status_code == 200
         form = response.context['adminform'].form
