@@ -6,7 +6,7 @@ from .views import LinklistView
 
 import django
 
-if django.VERSION[:2] < (1.7):
+if django.VERSION[:2] < (1, 7):
     admin.autodiscover()
 
 
