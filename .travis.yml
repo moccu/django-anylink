@@ -9,6 +9,7 @@ python:
   - pypy
 
 env:
+  - DJANGO_VERSION=1.9.x
   - DJANGO_VERSION=1.8.x
   - DJANGO_VERSION=1.7.x
   - DJANGO_VERSION=1.6.x
@@ -19,6 +20,8 @@ matrix:
     env: DJANGO_VERSION=1.7.x
   - python: '2.6'
     env: DJANGO_VERSION=1.8.x
+  - python: '2.6'
+    env: DJANGO_VERSION=1.9.x
   - python: '3.5'
     env: DJANGO_VERSION=1.6.x
   - python: '3.5'
