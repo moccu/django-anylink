@@ -8,9 +8,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
-_ICON_FILENAME = 'icon_deletelink.gif'
+ICON_FILENAME = 'icon_deletelink.gif'
 if VERSION[:2] >= (1, 9):
-    _ICON_FILENAME = 'icon-deletelink.svg'
+    ICON_FILENAME = 'icon-deletelink.svg'
 
 CHANGE_LINK = (
     u'<a href="{0}{1}" class="show-popup" id="lookup_id_{2}" '
@@ -24,7 +24,7 @@ SELECT_LINK = (
 )
 
 DELETE_IMG = (
-    u'&nbsp;<img src="{0}admin/img/' + _ICON_FILENAME + u'" id="delete_id_{1}" '
+    u'&nbsp;<img src="{0}admin/img/' + ICON_FILENAME + u'" id="delete_id_{1}" '
     u'onclick="return window.AnyLinkAddOrChangeWidget.delete(this);" '
     u'style="cursor:pointer{2}" />'
 )

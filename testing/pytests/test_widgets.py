@@ -5,6 +5,7 @@ import django
 from django.forms.models import modelform_factory
 
 from anylink.models import AnyLink
+from anylink.widgets import ICON_FILENAME
 
 from testing.testproject.models import TestModel
 
@@ -32,10 +33,10 @@ class TestAnyLinkAddOrChangeWidget:
             'ef="/admin/anylink/anylink/?_to_field=id" class="show-popup" id="l'
             'ookup_id_link" onclick="return window.AnyLinkAddOrChangeWidget.sho'
             'w(this);" data-add="Add link" data-change="Change link">Add link</'
-            'a>&nbsp;<img src="/static/admin/img/icon_deletelink.gif" id="delet'
+            'a>&nbsp;<img src="/static/admin/img/{0}" id="delet'
             'e_id_link" onclick="return window.AnyLinkAddOrChangeWidget.delete('
             'this);" style="cursor:pointer;display:none" /></p>'
-        )
+        ).format(ICON_FILENAME)
 
     @skip_django17
     def test_form_output_empty(self):
@@ -46,10 +47,10 @@ class TestAnyLinkAddOrChangeWidget:
             'href="/admin/anylink/anylink/?t=id" class="show-popup" id="lookup'
             '_id_link" onclick="return window.AnyLinkAddOrChangeWidget.show(th'
             'is);" data-add="Add link" data-change="Change link">Add link</a>&'
-            'nbsp;<img src="/static/admin/img/icon_deletelink.gif" id="delete_'
+            'nbsp;<img src="/static/admin/img/{0}" id="delete_'
             'id_link" onclick="return window.AnyLinkAddOrChangeWidget.delete(t'
             'his);" style="cursor:pointer;display:none" /></p>'
-        )
+        ).format(ICON_FILENAME)
 
     @requires_django17
     def test_form_output_with_instance17(self):
@@ -64,10 +65,10 @@ class TestAnyLinkAddOrChangeWidget:
             'rong>&nbsp;<a href="/admin/anylink/anylink/?_to_field=id" class="s'
             'how-popup" id="lookup_id_link" onclick="return window.AnyLinkAddOr'
             'ChangeWidget.show(this);" data-add="Add link" data-change="Change '
-            'link">Change link</a>&nbsp;<img src="/static/admin/img/icon_delete'
-            'link.gif" id="delete_id_link" onclick="return window.AnyLinkAddOrC'
+            'link">Change link</a>&nbsp;<img src="/static/admin/img/{0}" '
+            'id="delete_id_link" onclick="return window.AnyLinkAddOrC'
             'hangeWidget.delete(this);" style="cursor:pointer" /></p>'
-        )
+        ).format(ICON_FILENAME)
 
     @skip_django17
     def test_form_output_with_instance(self):
@@ -82,10 +83,10 @@ class TestAnyLinkAddOrChangeWidget:
             'strong>&nbsp;<a href="/admin/anylink/anylink/?t=id" class="show-p'
             'opup" id="lookup_id_link" onclick="return window.AnyLinkAddOrChan'
             'geWidget.show(this);" data-add="Add link" data-change="Change lin'
-            'k">Change link</a>&nbsp;<img src="/static/admin/img/icon_deleteli'
-            'nk.gif" id="delete_id_link" onclick="return window.AnyLinkAddOrCh'
+            'k">Change link</a>&nbsp;<img src="/static/admin/img/{0}" '
+            'id="delete_id_link" onclick="return window.AnyLinkAddOrCh'
             'angeWidget.delete(this);" style="cursor:pointer" /></p>'
-        )
+        ).format(ICON_FILENAME)
 
     def test_form_media(self):
         out = str(TestForm().media)

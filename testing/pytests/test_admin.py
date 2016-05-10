@@ -172,7 +172,7 @@ class TestAnyLinkAdmin:
         })
 
         if django.VERSION[:2] >= (1, 8):
-            response.context_data = {k: str(v) for k, v in response.context_data.items()}
+            response.context_data = dict((k, str(v)) for (k, v) in response.context_data.items())
 
             assert response.status_code == 200
             assert response.context_data == {
