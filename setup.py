@@ -20,17 +20,18 @@ if sys.argv[-1] == 'publish':
 
 test_requires = [
     'py>=1.4.26',
-    'pyflakes>=1.0.0',
+    'pyflakes==1.1.0',
     'pytest>=2.8.0',
     'pytest-cache>=1.0',
     'pytest-cov>=2.1.0',
-    'pytest-flakes==1.0.1',
-    'pytest-pep8==1.0.6',
-    'pytest-django==2.8.0',
-    'coverage==4.0',
-    'mock==1.3.0',
-    'pep8==1.6.2',
+    'pytest-flakes>=1.0.1',
+    'pytest-pep8>=1.0.6',
+    'pytest-django>=2.8.0',
+    'coverage>=4.0',
+    'mock>=1.3.0',
+    'pep8>=1.6.2',
     'tox',
+    'tox-pyenv',
 ]
 
 
