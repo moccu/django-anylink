@@ -33,7 +33,7 @@ class TestAnyLinkAddOrChangeWidget:
             'ef="/admin/anylink/anylink/?_to_field=id" class="show-popup" id="l'
             'ookup_id_link" onclick="return window.AnyLinkAddOrChangeWidget.sho'
             'w(this);" data-add="Add link" data-change="Change link">Add link</'
-            'a>&nbsp;<img src="/static/admin/img/{0}" id="delet'
+            'a>&nbsp;<img src="/static/admin/img/{0}" id="delete'
             'e_id_link" onclick="return window.AnyLinkAddOrChangeWidget.delete('
             'this);" style="cursor:pointer;display:none" /></p>'
         ).format(ICON_FILENAME)
