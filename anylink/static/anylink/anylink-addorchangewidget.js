@@ -38,7 +38,7 @@ window.AnyLinkAddOrChangeWidget = {
 		}
 
 		win = window.open(url + '?' + params, window_name,
-			'eight=710,width=980,resizable=yes,scrollbars=yes');
+			'height=710,width=980,resizable=yes,scrollbars=yes');
 
 		win.addEventListener('DOMContentLoaded', function () {
 			var $ = win.django.jQuery;
