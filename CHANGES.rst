@@ -1,6 +1,13 @@
 Changes
 =======
 
+0.4.0 (2016-05-11)
+------------------
+
+* Add support for django 1.9
+* Use SVG if django-version is greater than 1.8
+
+
 0.3.0 (2015-09-22)
 ------------------
 
