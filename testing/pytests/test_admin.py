@@ -228,7 +228,6 @@ class TestAnyLinkAdmin:
         field = form.fields['confirmation']
         assert field.required
         assert isinstance(field.widget, forms.CheckboxInput)
-        assert 'confirmation' in form.errors
         assert str(obj1) in form.errors['__all__'][0]
         assert str(obj2) in form.errors['__all__'][0]
         assert str(obj3) not in form.errors['__all__'][0]

@@ -4,7 +4,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-from .compat import add_error
+# from .compat import add_error
 from .models import AnyLink
 
 
@@ -25,10 +25,11 @@ class AnyLinkAdminForm(forms.ModelForm):
             if len(objects) > 1 and not data.get('confirmation'):
                 self.fields['confirmation'].widget = forms.CheckboxInput()
                 self.fields['confirmation'].required = True
-                add_error(self, 'confirmation', ugettext('Please confirm your changes.'), data)
+                self.fields['confirmation'].label = ugettext('Please confirm your changes.')
 
                 objects_used = u', '.join([force_text(obj) for obj in objects])
-                msg = ugettext(u'The following objects are using this link already: {0}').format(
-                    objects_used)
+                msg = ugettext(
+                    u'The following objects are using this link already: {0}').format(
+                        objects_used)
                 raise forms.ValidationError(msg)
         return data
