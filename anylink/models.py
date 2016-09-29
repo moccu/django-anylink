@@ -52,6 +52,7 @@ def do_anylink_extension_setup(cls, **kwargs):
 
     link_type = cls._meta.get_field('link_type')
     link_type.choices.extend(cls.extension_choices)
+    link_type.choices.sort(key=lambda item: item[0])
 
     # Manually add display function.
     cls.get_link_type_display = curry(cls._get_FIELD_display, field=link_type)
