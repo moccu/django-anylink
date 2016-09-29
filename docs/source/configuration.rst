@@ -42,3 +42,13 @@ model needs to have a ``get_absolute_url`` method.
     )
 
 For details on writing your own extensions, please see the :ref:`extension` section.
+
+Link Multiusage
+```````````````
+
+To use anylink instance multiple times set ``ANYLINK_ALLOW_MULTIPLE_USE`` to ``True``
+
+.. code-block:: python
+
+    # Example with app using link multiple times
+    ANYLINK_ALLOW_MULTIPLE_USE = True
