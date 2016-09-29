@@ -6,6 +6,7 @@ include pytest.ini
 include setup.cfg
 
 recursive-include anylink *.py
+recursive-include anylink/locale **
 recursive-include anylink/static/anylink *.js
 recursive-include anylink/static/tiny_mce/plugins **
 recursive-include anylink/templates/admin/anylink/anylink *.html
