@@ -4,7 +4,6 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
-# from .compat import add_error
 from .models import AnyLink
 
 
