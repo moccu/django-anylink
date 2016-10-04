@@ -1,6 +1,15 @@
 Changes
 =======
 
+0.4.1 (2016-10-04)
+------------------
+
+* Fix translation
+* Improve message formatting for multi link warning
+* Order link_type choices alphabetically to avoid redundant migrations
+* Update documentation
+
+
 0.4.0 (2016-05-11)
 ------------------
 
