@@ -1,10 +1,26 @@
 from __future__ import unicode_literals
+
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
 import mock
 import pytest
 
 from django.core.exceptions import ImproperlyConfigured
 
+from anylink.extensions import BaseLink
 from anylink.models import AnyLink, do_anylink_extension_setup
+
+
+class DummyExtension(BaseLink):
+    name = 'dummy'
+    verbose_name = name
+    provided_fields = (name,)
+
+    def get_absolute_url(self, link):
+        return None
 
 
 class TestAnyLinkMetaclass:
@@ -24,6 +40,22 @@ class TestAnyLinkMetaclass:
 
         assert len(self.anylink_test_class.extensions) == 1
         assert hasattr(self.anylink_test_class, 'get_link_type_display')
+
+    def test_choices_sorting(self, settings):
+        extensions = (
+            ('anylink.extensions.ModelLink', {'model': 'testproject.LinkableObject'}),
+            'testing.pytests.test_models.DummyExtension',
+            'anylink.extensions.ExternalLink',
+        )
+
+        settings.ANYLINK_EXTENSIONS = extensions
+
+        do_anylink_extension_setup(self.anylink_test_class)
+
+        choices_keys = list(
+            OrderedDict(self.anylink_test_class._meta.get_field('link_type').choices).keys())
+
+        assert choices_keys == ['dummy', 'external_url', 'linkableobject']
 
     def test_extension_registration_twice(self, settings):
         settings.ANYLINK_EXTENSIONS = (

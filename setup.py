@@ -26,7 +26,7 @@ test_requires = [
     'pytest-cov>=2.1.0',
     'pytest-flakes>=1.0.1',
     'pytest-pep8>=1.0.6',
-    'pytest-django>=2.8.0',
+    'pytest-django==2.9.1',
     'coverage>=4.0',
     'mock>=1.3.0',
     'pep8>=1.6.2',
