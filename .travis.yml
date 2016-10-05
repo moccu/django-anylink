@@ -36,3 +36,7 @@ after_success:
   - pip install "coveralls" coverage
   - coverage report
   - coveralls
+
+notifications:
+  slack:
+    secure: SdXHO4uh796dNBT+shRaavduAbLa+MLxye7ciKc8hBdyHT5zJAxXHlKJtRdAVUaPWe6Va4dM0sSlYiKEQ4Tcju7xnPi/o2An67c3KAhlsyUSFcSr66155l5V64YCtHtm3lYDWNsj2dHP1X1PAKLxG8TGFwLWImstwwjGvoiVuXc=
