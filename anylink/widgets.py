@@ -7,6 +7,8 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+import django.contrib.admin.widgets
+
 
 ICON_FILENAME = 'icon_deletelink.gif'
 if VERSION[:2] >= (1, 9):
@@ -99,3 +101,25 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
     def delete_button(self, name, value):
         return DELETE_IMG.format(
             settings.STATIC_URL, name, ';display:none' if not value else '')
+
+
+class NoAddingRelatedFieldWidgetWrapper(
+        django.contrib.admin.widgets.RelatedFieldWidgetWrapper):
+    """
+    This ia a hack to get rid of default django edit icons for anylink field
+    Solution from:
+
+    https://stackoverflow.com/questions/26425818/django-1-7-removing-add-button-from-inline-form
+    """
+
+    def render(self, name, value, *args, **kwargs):
+        if self.rel.to._meta.model_name == 'anylink':
+            self.widget.choices = self.choices
+            output = [self.widget.render(name, value, *args, **kwargs)]
+            return mark_safe(''.join(output))
+
+        return super(NoAddingRelatedFieldWidgetWrapper, self).render(
+            name, value, *args, **kwargs)
+
+# Monkeypatch
+django.contrib.admin.widgets.RelatedFieldWidgetWrapper = NoAddingRelatedFieldWidgetWrapper
