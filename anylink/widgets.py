@@ -114,10 +114,9 @@ class NoAddingRelatedFieldWidgetWrapper(
 
     def render(self, name, value, *args, **kwargs):
         if self.rel.to._meta.model_name == 'anylink':
-            self.widget.choices = self.choices
-            output = [self.widget.render(name, value, *args, **kwargs)]
-            return mark_safe(''.join(output))
-
+            self.can_change_related = False
+            self.can_add_related = False
+            self.can_delete_related = False
         return super(NoAddingRelatedFieldWidgetWrapper, self).render(
             name, value, *args, **kwargs)
 
