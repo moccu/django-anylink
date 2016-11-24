@@ -30,26 +30,26 @@ class TestAnyLinkAddOrChangeWidget:
         assert out == (
             '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
             'nk" type="hidden" /><strong id="name_id_link"></strong>&nbsp;<a hr'
-            'ef="/admin/anylink/anylink/?_to_field=id" class="show-popup" id="l'
-            'ookup_id_link" onclick="return window.AnyLinkAddOrChangeWidget.sho'
-            'w(this);" data-add="Add link" data-change="Change link">Add link</'
-            'a>&nbsp;<img src="/static/admin/img/{0}" id="delete_id_link" '
-            'onclick="return window.AnyLinkAddOrChangeWidget.delete('
-            'this);" style="cursor:pointer;display:none" /></p>'
+            'ef="/admin/anylink/anylink/?_to_field=id" class="anylink-button sh'
+            'ow-popup" id="lookup_id_link" onclick="return window.AnyLinkAddOrC'
+            'hangeWidget.show(this, true);" data-add="Add link" data-change="Ch'
+            'ange link">Add link</a>&nbsp;<img src="/static/admin/img/{0}" id="'
+            'delete_id_link" onclick="return window.AnyLinkAddOrChangeWidget.de'
+            'lete(this);" style="cursor:pointer;display:none" /></p>'
         ).format(ICON_FILENAME)
 
     @skip_django17
     def test_form_output_empty(self):
         out = TestForm().as_p()
         assert out == (
-            '<p><label for="id_link">Link:</label> <input id="id_link" name="l'
-            'ink" type="hidden" /><strong id="name_id_link"></strong>&nbsp;<a '
-            'href="/admin/anylink/anylink/?t=id" class="show-popup" id="lookup'
-            '_id_link" onclick="return window.AnyLinkAddOrChangeWidget.show(th'
-            'is);" data-add="Add link" data-change="Change link">Add link</a>&'
-            'nbsp;<img src="/static/admin/img/{0}" id="delete_'
-            'id_link" onclick="return window.AnyLinkAddOrChangeWidget.delete(t'
-            'his);" style="cursor:pointer;display:none" /></p>'
+            '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
+            'nk" type="hidden" /><strong id="name_id_link"></strong>&nbsp;<a hr'
+            'ef="/admin/anylink/anylink/?t=id" class="anylink-button show-popup'
+            '" id="lookup_id_link" onclick="return window.AnyLinkAddOrChangeWid'
+            'get.show(this, false);" data-add="Add link" data-change="Change li'
+            'nk">Add link</a>&nbsp;<img src="/static/admin/img/{0}" id="delete_'
+            'id_link" onclick="return window.AnyLinkAddOrChangeWidget.delete(th'
+            'is);" style="cursor:pointer;display:none" /></p>'
         ).format(ICON_FILENAME)
 
     @requires_django17
@@ -62,12 +62,12 @@ class TestAnyLinkAddOrChangeWidget:
         assert form.as_p() == (
             '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
             'nk" type="hidden" value="1" /><strong id="name_id_link">/fake/</st'
-            'rong>&nbsp;<a href="/admin/anylink/anylink/?_to_field=id" class="s'
-            'how-popup" id="lookup_id_link" onclick="return window.AnyLinkAddOr'
-            'ChangeWidget.show(this);" data-add="Add link" data-change="Change '
-            'link">Change link</a>&nbsp;<img src="/static/admin/img/{0}" '
-            'id="delete_id_link" onclick="return window.AnyLinkAddOrC'
-            'hangeWidget.delete(this);" style="cursor:pointer" /></p>'
+            'rong>&nbsp;<a href="/admin/anylink/anylink/?_to_field=id" class="a'
+            'nylink-button show-popup" id="lookup_id_link" onclick="return wind'
+            'ow.AnyLinkAddOrChangeWidget.show(this, true);" data-add="Add link"'
+            ' data-change="Change link">Change link</a>&nbsp;<img src="/static/'
+            'admin/img/{0}" id="delete_id_link" onclick="return window.AnyLinkA'
+            'ddOrChangeWidget.delete(this);" style="cursor:pointer" /></p>'
         ).format(ICON_FILENAME)
 
     @skip_django17
@@ -78,14 +78,14 @@ class TestAnyLinkAddOrChangeWidget:
 
         form = TestForm(instance=obj)
         assert form.as_p() == (
-            '<p><label for="id_link">Link:</label> <input id="id_link" name="l'
-            'ink" type="hidden" value="1" /><strong id="name_id_link">/fake/</'
-            'strong>&nbsp;<a href="/admin/anylink/anylink/?t=id" class="show-p'
-            'opup" id="lookup_id_link" onclick="return window.AnyLinkAddOrChan'
-            'geWidget.show(this);" data-add="Add link" data-change="Change lin'
-            'k">Change link</a>&nbsp;<img src="/static/admin/img/{0}" '
-            'id="delete_id_link" onclick="return window.AnyLinkAddOrCh'
-            'angeWidget.delete(this);" style="cursor:pointer" /></p>'
+            '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
+            'nk" type="hidden" value="1" /><strong id="name_id_link">/fake/</st'
+            'rong>&nbsp;<a href="/admin/anylink/anylink/?t=id" class="show-popu'
+            'p" id="lookup_id_link" onclick="return window.AnyLinkAddOrChangeWi'
+            'dget.show(this, false);" data-add="Add link" data-change="Change l'
+            'ink">Change link</a>&nbsp;<img src="/static/admin/img/{0}" id="del'
+            'ete_id_link" onclick="return window.AnyLinkAddOrChangeWidget.delet'
+            'e(this);" style="cursor:pointer" /></p>'
         ).format(ICON_FILENAME)
 
     def test_form_media(self):
