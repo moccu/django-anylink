@@ -36,7 +36,7 @@ test_requires = [
 
 
 install_requires = [
-    'Django>=1.6',
+    'Django>=1.6,<1.10',
 ]
 
 

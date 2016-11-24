@@ -1,5 +1,5 @@
 window.AnyLinkAddOrChangeWidget = {
-	show: function(el) {
+	show: function(el, django19) {
 		var name = el.id.replace(/^lookup_/, ''),
 			value = document.getElementById(name).value,
 			window_name = name.replace(/\./g, '__dot__').replace(/\-/g, '__dash__'),
@@ -15,6 +15,10 @@ window.AnyLinkAddOrChangeWidget = {
 
 		if (!value) {
 			value = 'add';
+		} else {
+			if (django19 === true) {
+				value = value + '/change';
+			}
 		}
 
 		win = window.open(url + value + '/?' + params, window_name,
@@ -91,3 +95,8 @@ window.AnyLinkAddOrChangeWidget = {
 		win.close();
 	}
 };
+
+window.addEventListener('DOMContentLoaded', function () {
+	var $ = window.django.jQuery;
+	$('a.anylink-button').siblings('a:not(.anylink-button)').hide();
+});

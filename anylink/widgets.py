@@ -13,13 +13,13 @@ if VERSION[:2] >= (1, 9):
     ICON_FILENAME = 'icon-deletelink.svg'
 
 CHANGE_LINK = (
-    u'<a href="{0}{1}" class="show-popup" id="lookup_id_{2}" '
-    u'onclick="return window.AnyLinkAddOrChangeWidget.show(this);" '
+    u'<a href="{0}{1}" class="anylink-button show-popup" id="lookup_id_{2}" '
+    u'onclick="return window.AnyLinkAddOrChangeWidget.show(this, %s);" '
     u'data-add="{3}" data-change="{4}">{5}</a>'
-)
+) % ('true' if VERSION[:2] >= (1, 9) else 'false')
 
 SELECT_LINK = (
-    u'&nbsp;<a href="{0}{1}" class="show-popup" id="lookup_id_{2}" '
+    u'&nbsp;<a href="{0}{1}" class="anylink-button show-popup" id="lookup_id_{2}" '
     u'onclick="return window.AnyLinkAddOrChangeWidget.select(this);">{3}</a>'
 )
 
