@@ -80,12 +80,12 @@ class TestAnyLinkAddOrChangeWidget:
         assert form.as_p() == (
             '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
             'nk" type="hidden" value="1" /><strong id="name_id_link">/fake/</st'
-            'rong>&nbsp;<a href="/admin/anylink/anylink/?t=id" class="show-popu'
-            'p" id="lookup_id_link" onclick="return window.AnyLinkAddOrChangeWi'
-            'dget.show(this, false);" data-add="Add link" data-change="Change l'
-            'ink">Change link</a>&nbsp;<img src="/static/admin/img/{0}" id="del'
-            'ete_id_link" onclick="return window.AnyLinkAddOrChangeWidget.delet'
-            'e(this);" style="cursor:pointer" /></p>'
+            'rong>&nbsp;<a href="/admin/anylink/anylink/?t=id" class="anylink-b'
+            'utton show-popup" id="lookup_id_link" onclick="return window.AnyLi'
+            'nkAddOrChangeWidget.show(this, false);" data-add="Add link" data-c'
+            'hange="Change link">Change link</a>&nbsp;<img src="/static/admin/i'
+            'mg/{0}" id="delete_id_link" onclick="return window.AnyLinkAddOrCha'
+            'ngeWidget.delete(this);" style="cursor:pointer" /></p>'
         ).format(ICON_FILENAME)
 
     def test_form_media(self):
