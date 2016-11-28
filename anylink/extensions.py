@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
+from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
-
-from .compat import get_model
 
 
 @python_2_unicode_compatible
@@ -68,7 +67,7 @@ class ModelLink(BaseLink):
         if 'model' not in self.kwargs:
             raise ImproperlyConfigured('Please provide a model path')
 
-        self.model = get_model(*self.kwargs['model'].split('.', 1))
+        self.model = apps.get_registered_model(*self.kwargs['model'].split('.', 1))
 
         if not hasattr(self.model, 'get_absolute_url'):
             raise ImproperlyConfigured(
