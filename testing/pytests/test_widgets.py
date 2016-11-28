@@ -16,7 +16,7 @@ TestForm = modelform_factory(TestModel, exclude=[])
 @pytest.mark.django_db
 class TestAnyLinkAddOrChangeWidget:
 
-    def test_form_output_empty17(self):
+    def test_form_output_empty(self):
         out = TestForm().as_p()
         assert out == (
             '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
@@ -29,7 +29,7 @@ class TestAnyLinkAddOrChangeWidget:
             'lete(this);" style="cursor:pointer;display:none" /></p>'
         ).format(ICON_FILENAME, ('true' if django.VERSION[:2] >= (1, 9) else 'false'))
 
-    def test_form_output_with_instance17(self):
+    def test_form_output_with_instance(self):
         link = AnyLink.objects.create(
             link_type='external_url', external_url='/fake/')
         obj = TestModel.objects.create(link=link)
