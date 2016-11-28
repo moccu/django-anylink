@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import django
+from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
@@ -12,9 +12,6 @@ from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
 from django.utils import six
 from django.utils.encoding import python_2_unicode_compatible, force_text
-
-from . import compat
-
 
 SELF, BLANK = ('_self', '_blank')
 TARGET_CHOICES = (
@@ -58,8 +55,8 @@ def do_anylink_extension_setup(cls, **kwargs):
     cls.get_link_type_display = curry(cls._get_FIELD_display, field=link_type)
 
     # Configure django modeladmin
-    has_admin = compat.is_installed('django.contrib.admin')
-    anylink_admin = compat.get_app_module('django.contrib.admin')
+    has_admin = apps.is_installed('django.contrib.admin')
+    anylink_admin = apps.get_app_config('admin').module
 
     if has_admin:
         for extension in list(cls.extensions.values()):
@@ -75,22 +72,6 @@ class AnyLinkModelBase(ModelBase):
     """
     def __new__(cls, name, bases, attrs):
         new_class = ModelBase.__new__(cls, name, bases, attrs)
-
-        # six.with_metaclass() inserts an extra class called 'NewBase' in the
-        # inheritance tree: Model -> NewBase -> object. But the initialization
-        # should be executed only once for a given model class.
-
-        # attrs will never be empty for classes declared in the standard way
-        # (ie. with the `class` keyword). This is quite robust.
-        if name == 'NewBase' and attrs == {}:
-            return new_class
-
-        # We do not need to initialize here for Django 1.7 (anylink.apps does
-        # this instead).
-        if django.VERSION[:2] >= (1, 7):
-            return new_class
-
-        do_anylink_extension_setup(new_class)
         return new_class
 
 
@@ -125,7 +106,10 @@ class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
 
     def get_used_by(self):
         used_by = []
-        related_models = compat.get_all_related_objects(self.__class__)
+        related_models = [
+            f for f in self.__class__._meta.get_fields()
+            if f.one_to_many and f.auto_created
+        ]
         for relation in related_models:
             reversed_name = relation.get_accessor_name()
             reversed_manager = getattr(self, reversed_name)

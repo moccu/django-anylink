@@ -119,14 +119,9 @@ class TestAnyLinkAdmin:
         })
 
         assert response.status_code == 200
-        if django.VERSION[:2] >= (1, 8):
-            assert (
-                'opener.dismissAddRelatedObjectPopup(window, "{0}", "http://test.de/");'
-            ).format(AnyLink.objects.get().pk) in force_text(response.content)
-        else:
-            assert (
-                'opener.dismissAddAnotherPopup(window, "{0}", "http://test.de/");'
-            ).format(AnyLink.objects.get().pk) in force_text(response.content)
+        assert (
+            'opener.dismissAddRelatedObjectPopup(window, "{0}", "http://test.de/");'
+        ).format(AnyLink.objects.get().pk) in force_text(response.content)
 
     def test_response_rtelink_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
@@ -171,19 +166,15 @@ class TestAnyLinkAdmin:
             'external_url': 'http://test.de/'
         })
 
-        if django.VERSION[:2] >= (1, 8):
-            response.context_data = dict((k, str(v)) for (k, v) in response.context_data.items())
+        response.context_data = dict((k, str(v)) for (k, v) in response.context_data.items())
 
-            assert response.status_code == 200
-            assert response.context_data == {
-                'action': 'change',
-                'new_value': '1',
-                'obj': 'http://test.de/',
-                'value': '1'
-            }
-        else:
-            assert response.status_code == 302
-            assert response['Location'] == 'http://testserver/admin/anylink/anylink/'
+        assert response.status_code == 200
+        assert response.context_data == {
+            'action': 'change',
+            'new_value': '1',
+            'obj': 'http://test.de/',
+            'value': '1'
+        }
 
     def test_change_view_context(self, admin_client, settings):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
