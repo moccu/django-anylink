@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import re
 
-import django
 from django.contrib import admin
 from django.conf import settings
 from django.template.response import SimpleTemplateResponse
@@ -24,12 +23,6 @@ class AnyLinkAdmin(admin.ModelAdmin):
     list_filter = ('link_type', 'target')
     search_fields = ('text', 'title')
     form = AnyLinkAdminForm
-
-    def __init__(self, *args, **kwargs):
-        super(AnyLinkAdmin, self).__init__(*args, **kwargs)
-        if django.VERSION < (1, 7):
-            for extension in list(self.model.extensions.values()):
-                extension.configure_modeladmin(self)
 
     def get_form(self, request, obj=None, **kwargs):
         defaults = {}

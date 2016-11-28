@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import django
+
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anylink',
     'testing.testproject',
 )
 
@@ -34,15 +35,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-if not django.VERSION[:2] < (1, 7):
-    INSTALLED_APPS += ('anylink.apps.AnyLinkConfig',)
-else:
-    INSTALLED_APPS += ('anylink',)
-
 ANYLINK_EXTENSIONS = (
     'anylink.extensions.ExternalLink',
     ('anylink.extensions.ModelLink', {'model': 'testproject.LinkableObject'}),
 )
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
 
 STATIC_URL = '/static/'
 
