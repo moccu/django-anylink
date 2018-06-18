@@ -120,9 +120,8 @@ class TestAnyLinkAdmin:
         })
 
         assert response.status_code == 200
-        assert (
-            'opener.dismissAddRelatedObjectPopup(window, "{0}", "http://test.de/");'
-        ).format(AnyLink.objects.get().pk) in force_text(response.content)
+        assert 'data-popup-response=' in force_text(response.content)
+        assert 'http://test.de/' in force_text(response.content)
 
     def test_response_rtelink_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')

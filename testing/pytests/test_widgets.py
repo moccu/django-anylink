@@ -4,7 +4,6 @@ import pytest
 from django.forms.models import modelform_factory
 
 from anylink.models import AnyLink
-from anylink.widgets import ICON_FILENAME
 
 from testing.testproject.models import TestModel
 
@@ -18,15 +17,15 @@ class TestAnyLinkAddOrChangeWidget:
     def test_form_output_empty(self):
         out = TestForm().as_p()
         assert out == (
-            '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
-            'nk" type="hidden" /><strong id="name_id_link"></strong>&nbsp;<a hr'
+            '<p><label for="id_link">Link:</label> <input type="hidden" name="l'
+            'ink" required id="id_link" /><strong id="name_id_link"></strong>&nbsp;<a hr'
             'ef="/admin/anylink/anylink/?_to_field=id" class="anylink-button sh'
-            'ow-popup" id="lookup_id_link" onclick="return window.AnyLinkAddOrC'
-            'hangeWidget.show(this, true);" data-add="Add link" data-change="Ch'
-            'ange link">Add link</a>&nbsp;<img src="/static/admin/img/{0}" id="'
+            'ow-popup" id="lookup_id_link" onclick="return window.AnyLinkAddOrCh'
+            'angeWidget.show(this, true);" data-add="Add link" data-change="Ch'
+            'ange link">Add link</a>&nbsp;<img src="/static/admin/img/icon-deletelink.svg" id="'
             'delete_id_link" onclick="return window.AnyLinkAddOrChangeWidget.de'
             'lete(this);" style="cursor:pointer;display:none" /></p>'
-        ).format(ICON_FILENAME)
+        )
 
     def test_form_output_with_instance(self):
         link = AnyLink.objects.create(
@@ -35,15 +34,15 @@ class TestAnyLinkAddOrChangeWidget:
 
         form = TestForm(instance=obj)
         assert form.as_p() == (
-            '<p><label for="id_link">Link:</label> <input id="id_link" name="li'
-            'nk" type="hidden" value="1" /><strong id="name_id_link">/fake/</st'
-            'rong>&nbsp;<a href="/admin/anylink/anylink/?_to_field=id" class="a'
+            '<p><label for="id_link">Link:</label> <input type="hidden" name="li'
+            'nk" value="1" required id="id_link" /><strong id="name_id_link">/fake/</'
+            'strong>&nbsp;<a href="/admin/anylink/anylink/?_to_field=id" class="a'
             'nylink-button show-popup" id="lookup_id_link" onclick="return wind'
             'ow.AnyLinkAddOrChangeWidget.show(this, true);" data-add="Add link"'
             ' data-change="Change link">Change link</a>&nbsp;<img src="/static/'
-            'admin/img/{0}" id="delete_id_link" onclick="return window.AnyLinkA'
+            'admin/img/icon-deletelink.svg" id="delete_id_link" onclick="return window.AnyLinkA'
             'ddOrChangeWidget.delete(this);" style="cursor:pointer" /></p>'
-        ).format(ICON_FILENAME)
+        )
 
     def test_form_media(self):
         out = str(TestForm().media)
