@@ -1,4 +1,7 @@
 from __future__ import unicode_literals
+
+import json
+
 import mock
 import pytest
 
@@ -164,10 +167,10 @@ class TestAnyLinkAdmin:
             'external_url': 'http://test.de/'
         })
 
-        response.context_data = dict((k, str(v)) for (k, v) in response.context_data.items())
+        context_data = json.loads(response.context_data['popup_response_data'])
 
         assert response.status_code == 200
-        assert response.context_data == {
+        assert context_data == {
             'action': 'change',
             'new_value': '1',
             'obj': 'http://test.de/',
