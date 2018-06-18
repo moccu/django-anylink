@@ -25,13 +25,12 @@ Now, you should define at least one link extension, for example external links.
         'anylink.extensions.ExternalLink',
     )
 
-Furthermore, you should consider using `South` for adding extensions.
-Because `South` would try to put the schema migrations inside the Python site
-packages directory, add the following (or something similar) to your settings.
+`django-anylink` auto-creates models for those migrations. To prevent them landing in
+Python's site packages directory, explicitly define (and create!) a module for them:
 
 .. code-block:: python
 
-    SOUTH_MIGRATION_MODULES = {
+    MIGRATION_MODULES = {
         'anylink': 'migrations.anylink',
     }
 
