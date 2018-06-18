@@ -22,8 +22,6 @@ SECRET_KEY = '-1fz+eqppo^x(ik)l0(twlv6&y#)(f+57pq+j%$eenc+8+o!d-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -91,6 +89,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'doit', 'media')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 TINYMCE_DEFAULT_CONFIG = {
     'relative_urls': False,
@@ -109,3 +124,7 @@ ANYLINK_EXTENSIONS = (
     'anylink.extensions.ExternalLink',
     ('anylink.extensions.ModelLink', {'model': 'doit.Item'}),
 )
+
+MIGRATION_MODULES = {
+    'anylink': 'migrations.anylink'
+}
