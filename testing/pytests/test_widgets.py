@@ -5,17 +5,17 @@ from django.forms.models import modelform_factory
 
 from anylink.models import AnyLink
 
-from testing.testproject.models import TestModel
+from testing.testproject.models import DummyModel
 
 
-TestForm = modelform_factory(TestModel, exclude=[])
+DummyForm = modelform_factory(DummyModel, exclude=[])
 
 
 @pytest.mark.django_db
 class TestAnyLinkAddOrChangeWidget:
 
     def test_form_output_empty(self):
-        out = TestForm().as_p()
+        out = DummyForm().as_p()
         assert out == (
             '<p><label for="id_link">Link:</label> <input type="hidden" name="l'
             'ink" required id="id_link" /><strong id="name_id_link"></strong>&nbsp;<a hr'
@@ -30,9 +30,9 @@ class TestAnyLinkAddOrChangeWidget:
     def test_form_output_with_instance(self):
         link = AnyLink.objects.create(
             link_type='external_url', external_url='/fake/')
-        obj = TestModel.objects.create(link=link)
+        obj = DummyModel.objects.create(link=link)
 
-        form = TestForm(instance=obj)
+        form = DummyForm(instance=obj)
         assert form.as_p() == (
             '<p><label for="id_link">Link:</label> <input type="hidden" name="li'
             'nk" value="1" required id="id_link" /><strong id="name_id_link">/fake/</'
@@ -45,7 +45,7 @@ class TestAnyLinkAddOrChangeWidget:
         )
 
     def test_form_media(self):
-        out = str(TestForm().media)
+        out = str(DummyForm().media)
         assert out == (
             '<script type="text/javascript" src="/static/anylink/anylink-'
             'addorchangewidget.js"></script>'

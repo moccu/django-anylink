@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from .models import TestModel, LinkableObject
+from .models import DummyModel, LinkableObject
 
 
 admin.site.register(LinkableObject)
-admin.site.register(TestModel)
+admin.site.register(DummyModel)

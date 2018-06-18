@@ -18,7 +18,7 @@ class LinkableObject(models.Model):
 
 
 @python_2_unicode_compatible
-class TestModel(models.Model):
+class DummyModel(models.Model):
     link = AnyLinkField()
 
     def __str__(self):
@@ -26,7 +26,7 @@ class TestModel(models.Model):
 
 
 @python_2_unicode_compatible
-class AnotherTestModel(models.Model):
+class AnotherDummyModel(models.Model):
     link = AnyLinkField()
 
     def __str__(self):

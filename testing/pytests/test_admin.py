@@ -14,10 +14,10 @@ from django.utils.encoding import force_text
 from anylink.admin import AnyLinkAdmin
 from anylink.models import AnyLink
 
-from testing.testproject.models import TestModel, AnotherTestModel
+from testing.testproject.models import DummyModel, AnotherDummyModel
 
 
-TestForm = modelform_factory(TestModel, exclude=[])
+DummyForm = modelform_factory(DummyModel, exclude=[])
 
 
 class MyCustomAnyLinkForm(ModelForm):
@@ -200,10 +200,10 @@ class TestAnyLinkAdmin:
         link1 = AnyLink.objects.create(link_type='external_url', external_url='http://foo1/')
         link2 = AnyLink.objects.create(link_type='external_url', external_url='http://foo2/')
 
-        obj1 = TestModel.objects.create(link=link1)
-        obj2 = TestModel.objects.create(link=link1)
-        obj3 = TestModel.objects.create(link=link2)
-        obj4 = AnotherTestModel.objects.create(link=link1)
+        obj1 = DummyModel.objects.create(link=link1)
+        obj2 = DummyModel.objects.create(link=link1)
+        obj3 = DummyModel.objects.create(link=link2)
+        obj4 = AnotherDummyModel.objects.create(link=link1)
 
         data = {
             '_popup': '1',
