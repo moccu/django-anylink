@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import pytest
 
-import django
 from django.forms.models import modelform_factory
 
 from anylink.models import AnyLink
@@ -23,11 +22,11 @@ class TestAnyLinkAddOrChangeWidget:
             'nk" type="hidden" /><strong id="name_id_link"></strong>&nbsp;<a hr'
             'ef="/admin/anylink/anylink/?_to_field=id" class="anylink-button sh'
             'ow-popup" id="lookup_id_link" onclick="return window.AnyLinkAddOrC'
-            'hangeWidget.show(this, {1});" data-add="Add link" data-change="Ch'
+            'hangeWidget.show(this, true);" data-add="Add link" data-change="Ch'
             'ange link">Add link</a>&nbsp;<img src="/static/admin/img/{0}" id="'
             'delete_id_link" onclick="return window.AnyLinkAddOrChangeWidget.de'
             'lete(this);" style="cursor:pointer;display:none" /></p>'
-        ).format(ICON_FILENAME, ('true' if django.VERSION[:2] >= (1, 9) else 'false'))
+        ).format(ICON_FILENAME)
 
     def test_form_output_with_instance(self):
         link = AnyLink.objects.create(
@@ -40,11 +39,11 @@ class TestAnyLinkAddOrChangeWidget:
             'nk" type="hidden" value="1" /><strong id="name_id_link">/fake/</st'
             'rong>&nbsp;<a href="/admin/anylink/anylink/?_to_field=id" class="a'
             'nylink-button show-popup" id="lookup_id_link" onclick="return wind'
-            'ow.AnyLinkAddOrChangeWidget.show(this, {1});" data-add="Add link"'
+            'ow.AnyLinkAddOrChangeWidget.show(this, true);" data-add="Add link"'
             ' data-change="Change link">Change link</a>&nbsp;<img src="/static/'
             'admin/img/{0}" id="delete_id_link" onclick="return window.AnyLinkA'
             'ddOrChangeWidget.delete(this);" style="cursor:pointer" /></p>'
-        ).format(ICON_FILENAME, ('true' if django.VERSION[:2] >= (1, 9) else 'false'))
+        ).format(ICON_FILENAME)
 
     def test_form_media(self):
         out = str(TestForm().media)

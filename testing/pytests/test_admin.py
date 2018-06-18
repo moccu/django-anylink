@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 import mock
 import pytest
 
-import django
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -31,8 +30,7 @@ class TestAnyLinkAdmin:
 
     def setup(self):
         self.modeladmin = AnyLinkAdmin(AnyLink, admin.site)
-        if django.VERSION[:2] >= (1, 9):
-            self.edit_url = '/admin/anylink/anylink/{0}/change/'
+        self.edit_url = '/admin/anylink/anylink/{0}/change/'
 
     def test_form_can_be_customized(self, rf, settings, admin_client):
         req = rf.get('/')

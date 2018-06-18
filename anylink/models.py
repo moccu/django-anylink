@@ -4,10 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.base import ModelBase
-try:
-    from django.utils.module_loading import import_string as import_by_path
-except ImportError:
-    from django.utils.module_loading import import_by_path
+from django.utils.module_loading import import_string
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
 from django.utils import six
@@ -30,7 +27,7 @@ def do_anylink_extension_setup(cls, **kwargs):
             extension_kwargs = extension[1]
             extension = extension[0]
 
-        extension = import_by_path(extension)(**extension_kwargs)
+        extension = import_string(extension)(**extension_kwargs)
 
         extension_name = extension.get_name().lower()
 
@@ -71,8 +68,7 @@ class AnyLinkModelBase(ModelBase):
     Metaclass for all models.
     """
     def __new__(cls, name, bases, attrs):
-        new_class = ModelBase.__new__(cls, name, bases, attrs)
-        return new_class
+        return ModelBase.__new__(cls, name, bases, attrs)
 
 
 @python_2_unicode_compatible
