@@ -14,6 +14,7 @@ class AnyLinkAddOrChangeField(forms.ModelChoiceField):
 class AnyLinkField(models.ForeignKey):
     def __init__(self, to='anylink.AnyLink', **kwargs):
         kwargs['verbose_name'] = kwargs.pop('verbose_name', 'Link')
+        kwargs.setdefault('on_delete', models.PROTECT)
         super(AnyLinkField, self).__init__(to, **kwargs)
 
     def formfield(self, **kwargs):

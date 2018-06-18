@@ -82,7 +82,8 @@ class ModelLink(BaseLink):
 
     def configure_model(self, model):
         model.add_to_class(self.get_name(), models.ForeignKey(
-            self.model, blank=True, null=True, verbose_name=self.get_verbose_name()))
+            self.model, blank=True, null=True, verbose_name=self.get_verbose_name(),
+            on_delete=models.PROTECT))
 
     def configure_modeladmin(self, modeladmin):
         modeladmin.raw_id_fields = list(modeladmin.raw_id_fields) + [self.get_name()]
