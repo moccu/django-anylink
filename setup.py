@@ -31,7 +31,6 @@ test_requires = [
     'mock>=1.3.0',
     'pep8>=1.6.2',
     'tox',
-    'tox-pyenv',
 ]
 
 
