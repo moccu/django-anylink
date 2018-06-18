@@ -94,4 +94,5 @@ class AnyLinkAdmin(admin.ModelAdmin):
                 'link_name': escape(str(obj))
             })
 
+
 admin.site.register(AnyLink, AnyLinkAdmin)
