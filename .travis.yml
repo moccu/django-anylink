@@ -5,10 +5,10 @@ python:
   - '2.7'
   - '3.4'
   - '3.5'
+  - '3.6'
 
 env:
-  - DJANGO_VERSION=1.9.x
-  - DJANGO_VERSION=1.8.x
+  - DJANGO_VERSION=django111
 
 install:
   - pip install tox

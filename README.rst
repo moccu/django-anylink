@@ -30,6 +30,11 @@ You can find all documentation in the "docs/source" folder and online at
 All documentation is in the "docs/source" directory and online at
 `Read the Docs <https://readthedocs.org/projects/django-anylink/>`_.
 
+Supported versions
+------------------
+The latest release of `django-anylink` works with Python 2.7 and Python 3.4-3.6,
+and supports Django 1.11.
+
 
 License
 -------
