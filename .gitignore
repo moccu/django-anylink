@@ -5,6 +5,7 @@
 coverage.xml
 .coveragerc
 .tox/
+.pytest_cache
 .cache
 .grunt
 .specsrunner.html
