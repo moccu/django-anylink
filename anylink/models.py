@@ -112,11 +112,3 @@ class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
             used_by.extend(reversed_manager.all())
 
         return used_by
-
-
-try:
-    # If south is available, add rules for anylink field.
-    from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ['^anylink'])
-except ImportError:
-    pass
