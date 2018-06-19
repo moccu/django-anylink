@@ -35,7 +35,7 @@ class TaskAdmin(admin.ModelAdmin):
             2: 'orange',
             3: 'red'
         }
-        return mark_safe(('<div style="width: 20px; height:100%%; '
-                'background-color:{color};">&nbsp;</div>').format(
-            color=color_mapping[obj.priority],
-        ))
+        return mark_safe((
+            '<div style="width: 20px; height:100%%; '
+            'background-color:{color};">&nbsp;</div>'
+        ).format(color=color_mapping[obj.priority]))
