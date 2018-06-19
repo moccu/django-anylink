@@ -1,5 +1,8 @@
+from anylink.templatetags.anylink_tags import insert_anylinks
 from django.db import models
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+
 from .models import Note, Item, Task
 
 from tinymce.widgets import TinyMCE
@@ -16,7 +19,10 @@ class NoteAdmin(admin.ModelAdmin):
         models.TextField: {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
     }
 
-    list_display = ('subject', 'comment')
+    list_display = ('subject', 'comment_linked')
+
+    def comment_linked(self, obj):
+        return mark_safe(insert_anylinks(obj.comment))
 
 
 @admin.register(Task)
@@ -29,8 +35,7 @@ class TaskAdmin(admin.ModelAdmin):
             2: 'orange',
             3: 'red'
         }
-        return ('<div style="width: 20px; height:100%%; '
+        return mark_safe(('<div style="width: 20px; height:100%%; '
                 'background-color:{color};">&nbsp;</div>').format(
             color=color_mapping[obj.priority],
-        )
-    colorized_priority.allow_tags = True
+        ))

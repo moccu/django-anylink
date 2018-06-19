@@ -27,7 +27,7 @@ class Linklist(models.Model):
 
 @python_2_unicode_compatible
 class Link(models.Model):
-    linklist = models.ForeignKey(Linklist)
+    linklist = models.ForeignKey(Linklist, on_delete=models.CASCADE)
 
     link = AnyLinkField()
 

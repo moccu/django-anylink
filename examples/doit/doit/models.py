@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 
 
@@ -11,7 +11,7 @@ class Note(models.Model):
 
 
 class Item(models.Model):
-    note = models.ForeignKey(Note, null=True, blank=True)
+    note = models.ForeignKey(Note, null=True, blank=True, on_delete=models.CASCADE)
     description = models.CharField(max_length=512)
 
     def get_absolute_url(self):
