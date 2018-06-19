@@ -38,8 +38,8 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
     class Media:
         js = ('anylink/anylink-addorchangewidget.js',)
 
-    def __init__(self, rel, admin_site=None, attrs=None, using=None):
-        self.rel = rel
+    def __init__(self, remote_field, admin_site=None, attrs=None, using=None):
+        self.remote_field = remote_field
         self.admin_site = admin_site or admin.site
         self.db = using
         super(AnyLinkAddOrChangeWidget, self).__init__(attrs)
@@ -51,9 +51,10 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
         output = [super(AnyLinkAddOrChangeWidget, self).render(name, value, attrs)]
         output.append(self.label_for_value(name, value))
 
-        if self.rel.to in self.admin_site._registry:
+        if self.remote_field.model in self.admin_site._registry:
             related_url = reverse('admin:{0}_{1}_changelist'.format(
-                self.rel.to._meta.app_label, self.rel.to._meta.model_name
+                self.remote_field.model._meta.app_label,
+                self.remote_field.model._meta.model_name
             ), current_app=self.admin_site.name)
 
             params = self.url_parameters()
@@ -80,16 +81,16 @@ class AnyLinkAddOrChangeWidget(forms.TextInput):
 
     def url_parameters(self):
         from django.contrib.admin.views.main import TO_FIELD_VAR
-        return {TO_FIELD_VAR: self.rel.get_related_field().name}
+        return {TO_FIELD_VAR: self.remote_field.get_related_field().name}
 
     def label_for_value(self, name, value):
         try:
             obj_repr = escape(
-                self.rel.to._default_manager.using(self.db).get(
-                    **{self.rel.get_related_field().name: value}
+                self.remote_field.model._default_manager.using(self.db).get(
+                    **{self.remote_field.get_related_field().name: value}
                 )
             )
-        except (ValueError, self.rel.to.DoesNotExist):
+        except (ValueError, self.remote_field.model.DoesNotExist):
             obj_repr = ''
 
         return u'<strong id="name_id_{0}">{1}</strong>&nbsp;'.format(name, obj_repr)

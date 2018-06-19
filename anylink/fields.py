@@ -7,7 +7,7 @@ from .widgets import AnyLinkAddOrChangeWidget
 
 class AnyLinkAddOrChangeField(forms.ModelChoiceField):
     def __init__(self, *args, **kwargs):
-        kwargs['widget'] = AnyLinkAddOrChangeWidget(kwargs.pop('rel'))
+        kwargs['widget'] = AnyLinkAddOrChangeWidget(kwargs.pop('remote_field'))
         super(AnyLinkAddOrChangeField, self).__init__(*args, **kwargs)
 
 
@@ -20,8 +20,8 @@ class AnyLinkField(models.ForeignKey):
     def formfield(self, **kwargs):
         defaults = {
             'form_class': AnyLinkAddOrChangeField,
-            'rel': self.rel,
-            'to_field_name': self.rel.field_name,
+            'remote_field': self.remote_field,
+            'to_field_name': self.remote_field.field_name,
         }
         defaults.update(kwargs)
         return super(AnyLinkField, self).formfield(**defaults)
