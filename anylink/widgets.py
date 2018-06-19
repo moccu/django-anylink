@@ -12,7 +12,7 @@ ICON_FILENAME = 'icon-deletelink.svg'
 
 CHANGE_LINK = (
     u'<a href="{0}{1}" class="anylink-button show-popup" id="lookup_id_{2}" '
-    u'onclick="return window.AnyLinkAddOrChangeWidget.show(this, true);" '
+    u'onclick="return window.AnyLinkAddOrChangeWidget.show(this);" '
     u'data-add="{3}" data-change="{4}">{5}</a>'
 )
 

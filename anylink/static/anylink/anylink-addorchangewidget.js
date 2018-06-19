@@ -1,5 +1,5 @@
 window.AnyLinkAddOrChangeWidget = {
-	show: function(el, django19) {
+	show: function(el) {
 		var name = el.id.replace(/^lookup_/, ''),
 			value = document.getElementById(name).value,
 			window_name = name.replace(/\./g, '__dot__').replace(/\-/g, '__dash__'),
@@ -16,9 +16,7 @@ window.AnyLinkAddOrChangeWidget = {
 		if (!value) {
 			value = 'add';
 		} else {
-			if (django19 === true) {
-				value = value + '/change';
-			}
+			value = value + '/change';
 		}
 
 		win = window.open(url + value + '/?' + params, window_name,
