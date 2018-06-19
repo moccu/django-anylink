@@ -1,10 +1,18 @@
 Changes
 =======
 
+1.0.0 (2018-06-19)
+------------------
+
+* Drop support for Python < 2.7
+* Drop support for Django < 1.11
+
+
 0.4.2 (2016-11-24)
 ------------------
 
 * Fix AddOrChangeWidget for Django 1.9
+
 
 0.4.1 (2016-10-04)
 ------------------
