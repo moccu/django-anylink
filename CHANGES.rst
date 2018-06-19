@@ -4,6 +4,7 @@ Changes
 1.0.0 (2018-06-19)
 ------------------
 
+* Add support for Django 2
 * Drop support for Python < 2.7
 * Drop support for Django < 1.11
 

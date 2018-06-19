@@ -9,6 +9,12 @@ python:
 
 env:
   - DJANGO_VERSION=django111
+  - DJANGO_VERSION=django20
+
+matrix:
+  exclude:
+    - python: '2.7'
+      env: DJANGO_VERSION=django20
 
 install:
   - pip install tox
