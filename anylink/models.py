@@ -3,7 +3,6 @@ from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-from django.db.models.base import ModelBase
 from django.utils.module_loading import import_string
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _
@@ -63,16 +62,8 @@ def do_anylink_extension_setup(cls, **kwargs):
                 extension.configure_modeladmin(modeladmin)
 
 
-class AnyLinkModelBase(ModelBase):
-    """
-    Metaclass for all models.
-    """
-    def __new__(cls, name, bases, attrs):
-        return ModelBase.__new__(cls, name, bases, attrs)
-
-
 @python_2_unicode_compatible
-class AnyLink(six.with_metaclass(AnyLinkModelBase, models.Model)):
+class AnyLink(models.Model):
     text = models.CharField(_('text'), max_length=150, blank=True)
     title = models.CharField(_('title'), max_length=150, blank=True)
     target = models.CharField(
