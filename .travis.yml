@@ -2,19 +2,15 @@ sudo: false
 language: python
 
 python:
-  - '2.7'
-  - '3.4'
-  - '3.5'
   - '3.6'
+  - '3.7'
+  - '3.8'
 
 env:
   - DJANGO_VERSION=django111
   - DJANGO_VERSION=django20
-
-matrix:
-  exclude:
-    - python: '2.7'
-      env: DJANGO_VERSION=django20
+  - DJANGO_VERSION=django21
+  - DJANGO_VERSION=django22
 
 install:
   - pip install tox
@@ -23,10 +19,6 @@ script:
   - tox -e "$TRAVIS_PYTHON_VERSION-$DJANGO_VERSION"
 
 after_success:
-  - pip install "coveralls" coverage
+  - pip install coveralls
   - coverage report
   - coveralls
-
-notifications:
-  slack:
-    secure: SdXHO4uh796dNBT+shRaavduAbLa+MLxye7ciKc8hBdyHT5zJAxXHlKJtRdAVUaPWe6Va4dM0sSlYiKEQ4Tcju7xnPi/o2An67c3KAhlsyUSFcSr66155l5V64YCtHtm3lYDWNsj2dHP1X1PAKLxG8TGFwLWImstwwjGvoiVuXc=
