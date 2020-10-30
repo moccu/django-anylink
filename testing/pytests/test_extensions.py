@@ -1,10 +1,8 @@
-from __future__ import unicode_literals
-import mock
+from unittest import mock
+
 import pytest
-
-from django.core.exceptions import ValidationError, ImproperlyConfigured
-
 from anylink.extensions import BaseLink, ExternalLink, ModelLink
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 
 
 class TestBaseLink:

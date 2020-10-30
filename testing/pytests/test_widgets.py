@@ -1,9 +1,6 @@
-from __future__ import unicode_literals
 import pytest
-
-from django.forms.models import modelform_factory
-
 from anylink.models import AnyLink
+from django.forms.models import modelform_factory
 
 from testing.testproject.models import DummyModel
 

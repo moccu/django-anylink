@@ -1,13 +1,12 @@
-from __future__ import unicode_literals
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-from django.utils.module_loading import import_string
+from django.utils.encoding import force_text
 from django.utils.functional import curry
+from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
-from django.utils import six
-from django.utils.encoding import python_2_unicode_compatible, force_text
+
 
 SELF, BLANK = ('_self', '_blank')
 TARGET_CHOICES = (
@@ -22,7 +21,7 @@ def do_anylink_extension_setup(cls, **kwargs):
     for extension in getattr(settings, 'ANYLINK_EXTENSIONS', []):
         extension_kwargs = {}
 
-        if not isinstance(extension, six.string_types):
+        if not isinstance(extension, str):
             extension_kwargs = extension[1]
             extension = extension[0]
 
@@ -62,7 +61,6 @@ def do_anylink_extension_setup(cls, **kwargs):
                 extension.configure_modeladmin(modeladmin)
 
 
-@python_2_unicode_compatible
 class AnyLink(models.Model):
     text = models.CharField(_('text'), max_length=150, blank=True)
     title = models.CharField(_('title'), max_length=150, blank=True)

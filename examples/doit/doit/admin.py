@@ -1,11 +1,10 @@
 from anylink.templatetags.anylink_tags import insert_anylinks
-from django.db import models
 from django.contrib import admin
+from django.db import models
 from django.utils.safestring import mark_safe
-
-from .models import Note, Item, Task
-
 from tinymce.widgets import TinyMCE
+
+from .models import Item, Note, Task
 
 
 @admin.register(Item)

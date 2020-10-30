@@ -1,17 +1,10 @@
-from __future__ import unicode_literals
+from collections import OrderedDict
+from unittest import mock
 
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
-
-import mock
 import pytest
-
-from django.core.exceptions import ImproperlyConfigured
-
 from anylink.extensions import BaseLink
 from anylink.models import AnyLink, do_anylink_extension_setup
+from django.core.exceptions import ImproperlyConfigured
 
 
 class DummyExtension(BaseLink):

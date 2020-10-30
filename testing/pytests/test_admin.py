@@ -1,20 +1,16 @@
-from __future__ import unicode_literals
-
 import json
+from unittest import mock
 
-import mock
 import pytest
-
+from anylink.admin import AnyLinkAdmin
+from anylink.models import AnyLink
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm, modelform_factory
 from django.utils.encoding import force_text
 
-from anylink.admin import AnyLinkAdmin
-from anylink.models import AnyLink
-
-from testing.testproject.models import DummyModel, AnotherDummyModel
+from testing.testproject.models import AnotherDummyModel, DummyModel
 
 
 DummyForm = modelform_factory(DummyModel, exclude=[])

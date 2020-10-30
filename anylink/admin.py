@@ -1,10 +1,11 @@
-from __future__ import unicode_literals
 import re
 
-from django.contrib import admin
 from django.conf import settings
+from django.contrib import admin
 from django.template.response import SimpleTemplateResponse
 from django.utils.html import escape
+
+
 try:
     import importlib
 except ImportError:
@@ -14,11 +15,10 @@ from .forms import AnyLinkAdminForm
 from .models import AnyLink
 
 
-EDITOR_ID_RE = re.compile('^[\w\-]+$')
+EDITOR_ID_RE = re.compile(r'^[\w\-]+$')
 
 
 class AnyLinkAdmin(admin.ModelAdmin):
-    # TODO: Add test for `get_absolute_url` for py3k
     list_display = ('get_absolute_url', 'link_type', 'text')
     list_filter = ('link_type', 'target')
     search_fields = ('text', 'title')

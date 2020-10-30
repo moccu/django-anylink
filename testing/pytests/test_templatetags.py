@@ -1,6 +1,4 @@
-from __future__ import unicode_literals
 import pytest
-
 from anylink.models import AnyLink
 from anylink.templatetags.anylink_tags import insert_anylinks
 

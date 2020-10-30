@@ -1,7 +1,6 @@
-from __future__ import unicode_literals
 from django.contrib import admin
 
-from .models import Linklist, Link, LinkableObject
+from .models import Link, LinkableObject, Linklist
 
 
 class LinkInline(admin.TabularInline):
