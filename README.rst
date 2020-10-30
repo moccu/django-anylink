@@ -2,17 +2,17 @@
 Generic linking for Django
 ==========================
 
-.. image:: https://badge.fury.io/py/django-anylink.png
+.. image:: https://badge.fury.io/py/django-anylink.svg
     :target: http://badge.fury.io/py/django-anylink
     :alt: Latest PyPI version
 
-.. image:: https://travis-ci.org/moccu/django-anylink.png
-   :target: https://travis-ci.org/moccu/django-anylink
-   :alt: Latest Travis CI build status
+.. image:: https://github.com/moccu/django-anylink/workflows/Tests/badge.svg?branch=master
+    :target: https://github.com/moccu/django-anylink/actions?query=workflow%3ATests
+    :alt: Latest GitHub Actions build status
 
-.. image:: https://coveralls.io/repos/moccu/django-anylink/badge.svg
-  :target: https://coveralls.io/github/moccu/django-anylink
-  :alt: Coverage of master build
+.. image:: https://codecov.io/gh/moccu/django-anylink/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/moccu/django-anylink
+    :alt: Coverage of master build
 
 .. image:: https://readthedocs.org/projects/django-anylink/badge/?version=latest
     :target: https://readthedocs.org/projects/django-anylink/?badge=latest
@@ -32,8 +32,7 @@ All documentation is in the "docs/source" directory and online at
 
 Supported versions
 ------------------
-The latest release of `django-anylink` works with Python 2.7 and Python 3.4-3.6,
-and supports Django 1.11.
+The latest release of `django-anylink` works with Python 3.6+ and supports Django 1.11.
 
 
 License
