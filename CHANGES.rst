@@ -1,6 +1,13 @@
 Changes
 =======
 
+2.0.0 (2020-10-30)
+------------------
+
+* Add support for Django 2.1 and 2.2
+* Drop support for Python < 3.6
+
+
 1.0.0 (2018-06-19)
 ------------------
 
