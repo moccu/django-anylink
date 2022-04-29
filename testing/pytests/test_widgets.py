@@ -30,7 +30,6 @@ class TestAnyLinkAddOrChangeWidget:
 
     def test_form_media(self):
         out = str(DummyForm().media)
-        assert out == (
-            '<script type="text/javascript" src="/static/anylink/anylink-'
-            'addorchangewidget.js"></script>'
-        )
+        assert '<script ' in out
+        assert 'src="/static/anylink/anylink-addorchangewidget.js"' in out
+        assert '></script>' in out

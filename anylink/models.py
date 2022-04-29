@@ -1,11 +1,12 @@
+from functools import partialmethod
+
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-from django.utils.encoding import force_text
-from django.utils.functional import curry
+from django.utils.encoding import force_str
 from django.utils.module_loading import import_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 SELF, BLANK = ('_self', '_blank')
@@ -47,7 +48,7 @@ def do_anylink_extension_setup(cls, **kwargs):
     link_type.choices.sort(key=lambda item: item[0])
 
     # Manually add display function.
-    cls.get_link_type_display = curry(cls._get_FIELD_display, field=link_type)
+    cls.get_link_type_display = partialmethod(cls._get_FIELD_display, field=link_type)
 
     # Configure django modeladmin
     has_admin = apps.is_installed('django.contrib.admin')
@@ -77,7 +78,7 @@ class AnyLink(models.Model):
         verbose_name_plural = _('Links')
 
     def __str__(self):
-        return force_text(self.get_absolute_url())
+        return force_str(self.get_absolute_url())
 
     def get_absolute_url(self):
         return self.extensions[self.link_type].get_absolute_url(self)

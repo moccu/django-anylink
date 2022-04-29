@@ -1,8 +1,8 @@
 from django import forms
 from django.conf import settings
-from django.utils.encoding import force_text
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import force_str
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from .models import AnyLink
 
@@ -24,10 +24,10 @@ class AnyLinkAdminForm(forms.ModelForm):
             if len(objects) > 1 and not data.get('confirmation'):
                 self.fields['confirmation'].widget = forms.CheckboxInput()
                 self.fields['confirmation'].required = True
-                self.fields['confirmation'].label = ugettext('Please confirm your changes.')
+                self.fields['confirmation'].label = gettext('Please confirm your changes.')
 
-                objects_used = u', '.join([force_text(obj) for obj in objects])
-                msg = ugettext(
+                objects_used = u', '.join([force_str(obj) for obj in objects])
+                msg = gettext(
                     u'The following objects are using this link already: {0}').format(
                         objects_used)
                 raise forms.ValidationError(msg)

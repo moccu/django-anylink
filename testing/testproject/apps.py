@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 
 class TestprojectConfig(AppConfig):
-    name = 'testproject'
+    name = 'testing.testproject'
     verbose_name = "Test Project"

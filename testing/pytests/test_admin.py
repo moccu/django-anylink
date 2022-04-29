@@ -8,7 +8,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm, modelform_factory
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from testing.testproject.models import AnotherDummyModel, DummyModel
 
@@ -92,7 +92,7 @@ class TestAnyLinkAdmin:
         assert response.status_code == 200
         assert (
             "opener.tinymce.plugins.AnyLink.popupCallback('ed1', '{0}');"
-        ).format(AnyLink.objects.get().get_rtelink_id()) in force_text(response.content)
+        ).format(AnyLink.objects.get().get_rtelink_id()) in force_str(response.content)
 
     def test_response_addorchange_popup_add(self, admin_client):
         response = admin_client.post('/admin/anylink/anylink/add/?aoc=1', data={
@@ -105,7 +105,7 @@ class TestAnyLinkAdmin:
         assert response.status_code == 200
         assert (
             "opener.AnyLinkAddOrChangeWidget.callback(window, {0}, 'http://test.de/')"
-        ).format(AnyLink.objects.get().pk) in force_text(response.content)
+        ).format(AnyLink.objects.get().pk) in force_str(response.content)
 
     def test_response_popup_add(self, admin_client):
         response = admin_client.post('/admin/anylink/anylink/add/', data={
@@ -116,8 +116,8 @@ class TestAnyLinkAdmin:
         })
 
         assert response.status_code == 200
-        assert 'data-popup-response=' in force_text(response.content)
-        assert 'http://test.de/' in force_text(response.content)
+        assert 'data-popup-response=' in force_str(response.content)
+        assert 'http://test.de/' in force_str(response.content)
 
     def test_response_rtelink_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
@@ -134,7 +134,7 @@ class TestAnyLinkAdmin:
         assert response.status_code == 200
         assert (
             "opener.tinymce.plugins.AnyLink.popupCallback('ed1', '{0}');"
-        ).format(AnyLink.objects.get().get_rtelink_id()) in force_text(response.content)
+        ).format(AnyLink.objects.get().get_rtelink_id()) in force_str(response.content)
 
     def test_response_addorchange_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')
@@ -151,7 +151,7 @@ class TestAnyLinkAdmin:
         assert response.status_code == 200
         assert (
             "opener.AnyLinkAddOrChangeWidget.callback(window, {0}, 'http://test.de/')"
-        ).format(AnyLink.objects.get().pk) in force_text(response.content)
+        ).format(AnyLink.objects.get().pk) in force_str(response.content)
 
     def test_response_popup_change(self, admin_client):
         obj = AnyLink.objects.create(link_type='external_url', external_url='http://foo')

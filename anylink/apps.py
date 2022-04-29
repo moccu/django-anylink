@@ -1,6 +1,6 @@
 # This model is for Django 1.7 compatibility. It should not be imported anywhere.
 from django.apps import AppConfig
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class AnyLinkConfig(AppConfig):
