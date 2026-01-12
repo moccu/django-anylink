@@ -1,6 +1,15 @@
 Changes
 =======
 
+3.0.0 (2026-01-12)
+------------------
+
+* Add support for Django 4.2 and 5.2
+* Add support for Python 3.10 and 3.11
+* Drop support for Django < 3.2
+* Drop support for Python < 3.10
+
+
 2.0.1 (2022-04-29)
 ------------------
 

@@ -55,6 +55,7 @@ class TestExternalLink:
 
 
 class TestModelLink:
+    @pytest.fixture(autouse=True)
     def setup(self):
         self.model_mock = mock.Mock()
         self.model_mock.__name__ = 'MockModel'

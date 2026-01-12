@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import re_path
 from django.contrib import admin
 
 from .views import LinklistView
 
 
 urlpatterns = [
-    url(r'^$', LinklistView.as_view()),
-    url(r'^admin/', admin.site.urls),
+    re_path(r'^$', LinklistView.as_view()),
+    re_path(r'^admin/', admin.site.urls),
 ]

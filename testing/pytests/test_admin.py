@@ -27,6 +27,7 @@ class MyCustomAnyLinkForm(ModelForm):
 class TestAnyLinkAdmin:
     edit_url = '/admin/anylink/anylink/{0}/'
 
+    @pytest.fixture(autouse=True)
     def setup(self):
         self.modeladmin = AnyLinkAdmin(AnyLink, admin.site)
         self.edit_url = '/admin/anylink/anylink/{0}/change/'
